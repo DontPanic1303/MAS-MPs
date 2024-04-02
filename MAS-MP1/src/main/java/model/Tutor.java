@@ -2,6 +2,7 @@ package model;
 
 import jdk.jshell.spi.ExecutionControl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,15 +15,15 @@ public class Tutor {
     private static Set<String> subjectList;
     private String name;
     private String surName;
-    private Date birthDate;
+    private LocalDate birthDate;
     private String email;
     private String phoneNumber;
-    private Date jojningDate;
+    private LocalDate jojningDate;
     private Set<String> subjects;
-    private double hourly_salary;
+    private Double hourly_salary;
     private static double minimalHourlySalary;
 
-    public Tutor(String name, String surName, Date birthDate, String email, String phoneNumber, Date jojningDate, Set<String> subjects, double hourly_salary) {
+    public Tutor(String name, String surName, LocalDate birthDate, String email, String phoneNumber, LocalDate jojningDate, Set<String> subjects, Double hourly_salary) {
         this.name = name;
         this.surName = surName;
         this.birthDate = birthDate;
@@ -33,7 +34,7 @@ public class Tutor {
         this.hourly_salary = hourly_salary;
     }
 
-    public Tutor(String name, String surName, Date birthDate, String email, Date jojningDate, Set<String> subjects, double hourly_salary) {
+    public Tutor(String name, String surName, LocalDate birthDate, String email, LocalDate jojningDate, Set<String> subjects, Double hourly_salary) {
         this.name = name;
         this.surName = surName;
         this.birthDate = birthDate;
@@ -93,11 +94,11 @@ public class Tutor {
         this.surName = surName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -117,12 +118,8 @@ public class Tutor {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getJojningDate() {
+    public LocalDate getJojningDate() {
         return jojningDate;
-    }
-
-    public void setJojningDate(Date jojningDate) {
-        this.jojningDate = jojningDate;
     }
 
     public Set<String> getSubjects() {
@@ -137,7 +134,7 @@ public class Tutor {
         return hourly_salary;
     }
 
-    public void setHourly_salary(double hourly_salary) {
+    public void setHourly_salary(Double hourly_salary) {
         this.hourly_salary = hourly_salary;
     }
 
