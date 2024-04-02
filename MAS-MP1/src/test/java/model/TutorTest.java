@@ -3,7 +3,6 @@ package model;
 import exceptions.AttributeConstraintViolationException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 
 
 import java.time.LocalDate;
@@ -12,17 +11,45 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TutorTest {
-    @BeforeAll
-    static void setStaticArguments(){
-        var subjectSet = Set.of(
+
+    @Test
+    public void setSubjectListSuccess(){
+        var subSet = Set.of(
                 "Matematyka",
                 "Fizyka",
                 "Polski",
                 "Biologia",
                 "Chemia"
         );
-        Tutor.setSubjectList(subjectSet);
-        Tutor.setMinimalHourlySalary(30.0);
+        Tutor.setSubjectList(subSet);
+        Assertions.assertEquals(subSet,Tutor.getSubjectList());
+    }
+
+    @Test
+    public void setSubjectListNull(){
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> Tutor.setSubjectList(null)
+        );
+    }
+
+    @Test
+    public void setMinimalHourlySalarySuccess(){
+        Tutor.setMinimalHourlySalary(20.0);
+        Assertions.assertEquals(20.0,Tutor.getMinimalHourlySalary());
+    }
+
+    @Test
+    public void setMinimalHourlySalaryNull(){
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> Tutor.setMinimalHourlySalary(null)
+        );
+    }
+
+    @Test
+    public void setMinimalHourlySalaryOnMinus(){
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> Tutor.setMinimalHourlySalary(-1.0)
+        );
     }
 
     @Test
@@ -34,7 +61,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
 
@@ -43,7 +70,7 @@ public class TutorTest {
         Assertions.assertEquals(LocalDate.of(1990,11,11),t1.getBirthDate());
         Assertions.assertEquals("jan.kowalski@gmail.com",t1.getEmail());
         Assertions.assertEquals("123456789",t1.getPhoneNumber());
-        Assertions.assertEquals(Set.of("Metematyka","Fizyka"),t1.getSubjects());
+        Assertions.assertEquals(Set.of("Matematyka","Fizyka"),t1.getSubjects());
         Assertions.assertEquals(50.0,t1.getHourly_salary());
 
     }
@@ -56,7 +83,7 @@ public class TutorTest {
                 LocalDate.of(1990,11,11),
                 "jan.kowalski@gmail.com",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
 
@@ -64,7 +91,7 @@ public class TutorTest {
         Assertions.assertEquals("Kowalski",t1.getSurName());
         Assertions.assertEquals(LocalDate.of(1990,11,11),t1.getBirthDate());
         Assertions.assertEquals("jan.kowalski@gmail.com",t1.getEmail());
-        Assertions.assertEquals(Set.of("Metematyka","Fizyka"),t1.getSubjects());
+        Assertions.assertEquals(Set.of("Matematyka","Fizyka"),t1.getSubjects());
         Assertions.assertEquals(50.0,t1.getHourly_salary());
     }
 
@@ -188,6 +215,23 @@ public class TutorTest {
     }
 
     @Test
+    public void createTutorWithWrongEmail(){
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> {
+                    Tutor t1 = new Tutor(
+                            "Jan",
+                            "Kowalski",
+                            LocalDate.of(1990,11,11),
+                            "email.wp.pl",
+                            LocalDate.now(),
+                            Set.of("Metematyka","Fizyka"),
+                            50.0
+                    );
+                }
+        );
+    }
+
+    @Test
     public void createTutorWithNullJojningDate(){
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
@@ -280,13 +324,31 @@ public class TutorTest {
                 "Kowalski",
                 LocalDate.of(1990,11,11),
                 "jan.kowalski@gmail.com",
-                "123456789",
+                null,
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
 
         Assertions.assertEquals(null,t1.getPhoneNumber());
+    }
+
+    @Test
+    public void createTutorWithWrongPhoneNumber(){
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> {
+                    Tutor t1 = new Tutor(
+                            "Jan",
+                            "Kowalski",
+                            LocalDate.of(1990,11,11),
+                            "jan.kowalski@gmail.com",
+                            "12a",
+                            LocalDate.now(),
+                            Set.of("Matematyka","Fizyka"),
+                            50.0
+                    );
+                }
+        );
     }
 
     @Test
@@ -318,7 +380,7 @@ public class TutorTest {
                             "jan.kowalski@gmail.com",
                             "",
                             LocalDate.now(),
-                            Set.of("Metematyka","Fizyka"),
+                            Set.of("Matematyka","Fizyka"),
                             10.0
                     );
                 }
@@ -334,7 +396,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         t1.setName("Paweł");
@@ -350,7 +412,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -369,7 +431,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -388,7 +450,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         t1.setSurName("Białowieski");
@@ -404,7 +466,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -423,7 +485,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -442,7 +504,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         t1.setBirthDate(LocalDate.of(1991,10,10));
@@ -458,7 +520,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -477,7 +539,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         t1.setEmail("jan.kowalski2@gmail.com");
@@ -493,7 +555,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -512,12 +574,31 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
                     t1.setEmail("");
+                }
+        );
+    }
+
+    @Test
+    public void setEmailWrong(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka","Fizyka"),
+                50.0
+        );
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> {
+                    t1.setEmail("email.wp.pl");
                 }
         );
     }
@@ -531,7 +612,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         t1.setPhoneNumber("987654321");
@@ -547,7 +628,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         t1.setPhoneNumber(null);
@@ -563,12 +644,31 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
                     t1.setPhoneNumber("");
+                }
+        );
+    }
+
+    @Test
+    public void setPhoneNumberWrong(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka","Fizyka"),
+                50.0
+        );
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> {
+                    t1.setPhoneNumber("23as2");
                 }
         );
     }
@@ -582,10 +682,10 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
-        var subjects = Set.of("Polski, Fizyka");
+        var subjects = Set.of("Polski", "Fizyka");
         t1.setSubjects(subjects);
         Assertions.assertEquals(subjects,t1.getSubjects());
     }
@@ -599,7 +699,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -618,7 +718,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         var subjects = Set.of("");
@@ -638,7 +738,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         var subjects = Set.of("przedmiot1");
@@ -658,7 +758,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         t1.setHourly_salary(55.0);
@@ -674,7 +774,7 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -693,12 +793,14 @@ public class TutorTest {
                 "jan.kowalski@gmail.com",
                 "123456789",
                 LocalDate.now(),
-                Set.of("Metematyka","Fizyka"),
+                Set.of("Matematyka","Fizyka"),
                 50.0
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
-                    t1.setHourly_salary(10.0);
+                    var hs = Tutor.getMinimalHourlySalary();
+                    hs -= 10;
+                    t1.setHourly_salary(hs);
                 }
         );
     }
