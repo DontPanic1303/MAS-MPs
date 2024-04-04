@@ -1,36 +1,19 @@
 package model;
 
 import exceptions.AttributeConstraintViolationException;
+import exceptions.MinimalSetSizeException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TutorTest {
-
-    @Test
-    public void setSubjectListSuccess(){
-        var subSet = Set.of(
-                "Matematyka",
-                "Fizyka",
-                "Polski",
-                "Biologia",
-                "Chemia"
-        );
-        Tutor.setSubjectList(subSet);
-        Assertions.assertEquals(subSet,Tutor.getSubjectList());
-    }
-
-    @Test
-    public void setSubjectListNull(){
-        assertThrows(AttributeConstraintViolationException.class,
-                () -> Tutor.setSubjectList(null)
-        );
-    }
 
     @Test
     public void setMinimalHourlySalarySuccess(){
@@ -730,26 +713,6 @@ public class TutorTest {
     }
 
     @Test
-    public void setSubjectWrong(){
-        Tutor t1 = new Tutor(
-                "Jan",
-                "Kowalski",
-                LocalDate.of(1990,11,11),
-                "jan.kowalski@gmail.com",
-                "123456789",
-                LocalDate.now(),
-                Set.of("Matematyka","Fizyka"),
-                50.0
-        );
-        var subjects = Set.of("przedmiot1");
-        assertThrows(AttributeConstraintViolationException.class,
-                () -> {
-                    t1.setSubjects(subjects);
-                }
-        );
-    }
-
-    @Test
     public void setHourlySalarySucces(){
         Tutor t1 = new Tutor(
                 "Jan",
@@ -804,4 +767,132 @@ public class TutorTest {
                 }
         );
     }
+
+    @Test
+    public void addSubjectSuccess(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka","Fizyka"),
+                50.0
+        );
+        t1.addSubject("Polski");
+        Assertions.assertEquals(Set.of("Matematyka","Fizyka","Polski"),t1.getSubjects());
+    }
+
+    @Test
+    public void addSubjectNull(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka","Fizyka"),
+                50.0
+        );
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> {
+                    t1.addSubject(null);
+                }
+        );
+    }
+
+    @Test
+    public void addSubjectEmpty(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka","Fizyka"),
+                50.0
+        );
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> {
+                    t1.addSubject("");
+                }
+        );
+    }
+
+    @Test
+    public void removeSubjectSuccess(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka","Fizyka"),
+                50.0
+        );
+        t1.removeSubject("Matematyka");
+        Assertions.assertEquals(Set.of("Fizyka"),t1.getSubjects());
+    }
+
+    @Test
+    public void removeSubjectNull(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka","Fizyka"),
+                50.0
+        );
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> {
+                    t1.removeSubject(null);
+                }
+        );
+    }
+
+    @Test
+    public void removeSubjectEmpty(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka","Fizyka"),
+                50.0
+        );
+        assertThrows(AttributeConstraintViolationException.class,
+                () -> {
+                    t1.removeSubject("");
+                }
+        );
+    }
+
+    @Test
+    public void removeSubjectToLowSubjects(){
+        Tutor t1 = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                Set.of("Matematyka"),
+                50.0
+        );
+        assertThrows(MinimalSetSizeException.class,
+                () -> {
+                    t1.removeSubject("Matematyka");
+                }
+        );
+    }
+
 }

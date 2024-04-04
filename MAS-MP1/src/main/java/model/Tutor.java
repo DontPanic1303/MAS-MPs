@@ -1,23 +1,34 @@
 package model;
 
 import exceptions.AttributeConstraintViolationException;
+import exceptions.MinimalSetSizeException;
 import jdk.jshell.spi.ExecutionControl;
 
+import java.io.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Tutor {
+public class Tutor implements Serializable {
+
+    /*
+    * Atrybut powtarzalny
+
+Może zawierać więcej niż jedną wartość.
+
+Implementowany za pomocą kolekcji (częściej) lub tablicy (w szczególnych przypadkach).
+Wymagany atrybut powtarzalny powinien zawsze posiadać co najmniej jedną wartość
+Należy stworzyć metody do dodawania i usuwania wartości atrybutu powtarzalnego ( addXXX(…) removeXXX(…) )
+Podczas dodawania należy przeprowadzić sprawdzenie poprawności przekazanej wartości (np. czy nie jest null, pustym ciągiem znaków, liczbą poza zakresem itp.)
+Jeśli atrybut jest wymagany podczas usuwania należy upewnić się, że nie zostanie usunięta ostatnia wartość
+Nie jest wymagana metoda zastępująca kolekcję (setXXX(…)). W przypadku jej implementacji należy upewnić się, czy wszystkie elementy przekazanej kolekcji spełniają warunki walidacji
+Metoda pobierająca atrybut musi być zabezpieczona przed nieuprawnioną modyfikacją kolekcji, podobnie jak w przypadku ekstensji
+    * */
 
     private static Set<Tutor> tutorList = new HashSet<>();
 
-    private static Set<String> subjectList = Set.of(
-            "Matematyka",
-            "Fizyka",
-            "Polski",
-            "Biologia"
-            );
     private String name;
     private String surName;
     private LocalDate birthDate;
@@ -27,6 +38,8 @@ public class Tutor {
     private Set<String> subjects;
     private Double hourly_salary;
     private static Double minimalHourlySalary = 20.0;
+
+    private static final String fileName = "tutorList";
 
     public Tutor(String name, String surName, LocalDate birthDate, String email, String phoneNumber, LocalDate jojningDate, Set<String> subjects, Double hourly_salary) {
         this.setName(name);
@@ -51,12 +64,52 @@ public class Tutor {
         tutorList.add(this);
     }
 
-    public double getInternship_bonus() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Not implemented yet");
+    public double getInternshipBonus() {
+        LocalDate currentDate = LocalDate.now();
+
+        long yearsOfTutoring = ChronoUnit.YEARS.between(this.jojningDate, currentDate);
+
+        return switch ((int) yearsOfTutoring){
+            case 0 -> 0.5;
+            case 1 -> 0.55;
+            case 2 -> 0.6;
+            case 3 -> 0.65;
+            default -> 0.7;
+        };
     }
 
-    public static List<Tutor> FindTutorsBySubject(String subject) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Not implemented yet");
+    public static Set<Tutor> FindTutorsBySubject(String subject) {
+        var tutorsToTeturn = new HashSet<Tutor>();
+
+        for (Tutor tutor: Tutor.getTutorList()) {
+            for (String sub: tutor.getSubjects()) {
+                if (sub.equals(subject)) {
+                    tutorsToTeturn.add(tutor);
+                    break;
+                }
+            }
+        }
+        return tutorsToTeturn;
+    }
+
+    public static void saveExtensjaToFile() {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            outputStream.writeObject(tutorList);
+            System.out.println("All tutors saved to file");
+        } catch (IOException e) {
+            System.err.println("Error on saved: " + e.getMessage());
+        }
+    }
+
+    public static void loadExtensjaFromFile() {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))) {
+            tutorList = (Set<Tutor>) inputStream.readObject();
+            System.out.println("All tutors loaded from file");
+        } catch (FileNotFoundException e) {
+            System.err.println("File do not exists");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error on saved: " + e.getMessage());
+        }
     }
 
     @Override
@@ -66,7 +119,7 @@ public class Tutor {
                 ", surName='" + surName + '\'' +
                 ", birthDate=" + birthDate +
                 ", email='" + email + '\'' +
-                ", phoneNumber='" + Objects.requireNonNullElse(this.phoneNumber, "non") + '\'' +
+                ", phoneNumber='" + Objects.requireNonNullElse(this.phoneNumber, "not given") + '\'' +
                 ", jojningDate=" + jojningDate +
                 ", subjects=" + subjects +
                 ", hourly_salary=" + hourly_salary +
@@ -74,24 +127,8 @@ public class Tutor {
     }
 
     //metoda save all to file serizable
-    public static Set<Tutor> getTutorList() {
-        return new HashSet<>(tutorList);
-    }
-
-    public static Set<String> getSubjectList() {
-        return new HashSet<>(subjectList);
-    }
-
-    public static void setSubjectList(Set<String> subjectList) {
-        if (subjectList == null)
-            throw new AttributeConstraintViolationException("Subject can not by null");
-        for (String subject: subjectList) {
-            if (subject == null)
-                throw new AttributeConstraintViolationException("Subject can not by null");
-            if (subject.isEmpty())
-                throw new AttributeConstraintViolationException("Subject can not by empty");
-        }
-        Tutor.subjectList = subjectList;
+    public static List<Tutor> getTutorList() {
+        return Collections.unmodifiableList(new ArrayList<>(tutorList));
     }
 
     public String getName() {
@@ -180,7 +217,7 @@ public class Tutor {
     }
 
     public Set<String> getSubjects() {
-        return subjects;
+        return Collections.unmodifiableSet(subjects);
     }
 
     public void setSubjects(Set<String> subjects) {
@@ -188,11 +225,40 @@ public class Tutor {
             throw new AttributeConstraintViolationException("Subjects can not by null");
         if (subjects.isEmpty())
             throw new AttributeConstraintViolationException("Subjects can not by empty");
-        if (!Tutor.getSubjectList().containsAll(subjects))
-            throw new AttributeConstraintViolationException("Some subjects are not in the subject list");
+        for (String subject: subjects) {
+            if (subject == null)
+                throw new AttributeConstraintViolationException("Subject can not by null");
+            if (subject.isEmpty())
+                throw new AttributeConstraintViolationException("Subject can not by empty");
+        }
         this.subjects = subjects;
     }
 
+    public void addSubject(String subject){
+        if (subject == null)
+            throw new AttributeConstraintViolationException("Subjects can not by null");
+        if (subject.isEmpty())
+            throw new AttributeConstraintViolationException("Subjects can not by empty");
+        if (this.subjects.contains(subject))
+            throw new AttributeConstraintViolationException("Subjects already exists in set");
+        var updatedSubjects = new HashSet<>(this.subjects);
+        updatedSubjects.add(subject);
+        this.subjects = updatedSubjects;
+    }
+
+    public void removeSubject(String subject){
+        if (subject == null)
+            throw new AttributeConstraintViolationException("Subjects can not by null");
+        if (subject.isEmpty())
+            throw new AttributeConstraintViolationException("Subjects can not by empty");
+        if (!this.subjects.contains(subject))
+            throw new AttributeConstraintViolationException("Subjects not exists in set");
+        if (this.subjects.size()<2)
+            throw new MinimalSetSizeException("The number of subjects can not by less that one");
+        var updatedSubjects = new HashSet<>(this.subjects);
+        updatedSubjects.remove(subject);
+        this.subjects = updatedSubjects;
+    }
     public double getHourly_salary() {
         return hourly_salary;
     }
