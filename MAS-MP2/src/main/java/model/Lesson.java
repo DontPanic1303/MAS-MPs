@@ -9,12 +9,12 @@ public class Lesson implements Serializable {
 
     private LocalDate date;
     private LessonStatus lessonStatus;
-    private String adress;
+    private String address;
 
-    public Lesson(LocalDate date, LessonStatus lessonStatus, String adress) {
+    public Lesson(LocalDate date, LessonStatus lessonStatus, String address) {
         this.date = date;
         this.lessonStatus = lessonStatus;
-        this.adress = adress;
+        this.address = address;
     }
 
     public LocalDate getDate() {
@@ -33,12 +33,12 @@ public class Lesson implements Serializable {
         this.lessonStatus = lessonStatus;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Lesson implements Serializable {
         return "Lesson{" +
                 "date=" + date +
                 ", lessonStatus=" + lessonStatus +
-                ", adress='" + adress + '\'' +
+                ", adress='" + address + '\'' +
                 '}';
     }
 }

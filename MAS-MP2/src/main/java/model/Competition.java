@@ -6,12 +6,12 @@ import java.time.LocalDate;
 public class Competition implements Serializable {
 
     private LocalDate date;
-    private String adress;
+    private String address;
     private String name;
 
-    public Competition(LocalDate date, String adress, String name) {
+    public Competition(LocalDate date, String address, String name) {
         this.date = date;
-        this.adress = adress;
+        this.address = address;
         this.name = name;
     }
 
@@ -23,12 +23,12 @@ public class Competition implements Serializable {
         this.date = date;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
 
     public String getName() {
@@ -43,7 +43,7 @@ public class Competition implements Serializable {
     public String toString() {
         return "Competition{" +
                 "date=" + date +
-                ", adress='" + adress + '\'' +
+                ", adress='" + address + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }
