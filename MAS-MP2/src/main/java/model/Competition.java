@@ -1,5 +1,8 @@
 package model;
 
+import exceptions.AttributeConstraintViolationException;
+import features.EkstensjaClass;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -10,9 +13,10 @@ public class Competition implements Serializable {
     private String name;
 
     public Competition(LocalDate date, String address, String name) {
-        this.date = date;
-        this.address = address;
-        this.name = name;
+        this.setDate(date);
+        this.setAddress(address);
+        this.setName(name);
+        EkstensjaClass.addCompetition(this);
     }
 
     public LocalDate getDate() {
@@ -20,6 +24,8 @@ public class Competition implements Serializable {
     }
 
     public void setDate(LocalDate date) {
+        if (date == null)
+            throw new AttributeConstraintViolationException("Date can not by null");
         this.date = date;
     }
 
@@ -27,8 +33,12 @@ public class Competition implements Serializable {
         return address;
     }
 
-    public void setAddress(String adress) {
-        this.address = adress;
+    public void setAddress(String address) {
+        if (address == null)
+            throw new AttributeConstraintViolationException("Address can not by null");
+        if (address.isEmpty())
+            throw new AttributeConstraintViolationException("Address can not by empty");
+        this.address = address;
     }
 
     public String getName() {
@@ -36,6 +46,10 @@ public class Competition implements Serializable {
     }
 
     public void setName(String name) {
+        if (name == null)
+            throw new AttributeConstraintViolationException("Name can not by null");
+        if (name.isEmpty())
+            throw new AttributeConstraintViolationException("Name can not by empty");
         this.name = name;
     }
 

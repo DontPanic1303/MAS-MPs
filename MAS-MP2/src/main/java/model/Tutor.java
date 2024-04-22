@@ -2,6 +2,7 @@ package model;
 
 import exceptions.AttributeConstraintViolationException;
 import exceptions.MinimalSetSizeException;
+import features.EkstensjaClass;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class Tutor implements Serializable {
 
-    private static Set<Tutor> tutorList = new HashSet<>();
+//    private static Set<Tutor> tutorList = new HashSet<>();
 
     private String name;
     private String surName;
@@ -35,7 +36,7 @@ public class Tutor implements Serializable {
 //        this.setSubjects(subjects);
         this.setHourly_salary(hourly_salary);
         this.setPhoneNumber(phoneNumber);
-        tutorList.add(this);
+        EkstensjaClass.addTutor(this);
     }
 
     public Tutor(String name, String surName, LocalDate birthDate, String email, LocalDate jojningDate, Set<String> subjects, Double hourly_salary) {
@@ -46,7 +47,7 @@ public class Tutor implements Serializable {
         this.setJojningDate(jojningDate);
 //        this.setSubjects(subjects);
         this.setHourly_salary(hourly_salary);
-        tutorList.add(this);
+        EkstensjaClass.addTutor(this);
     }
 
     public double getInternshipBonus() {
@@ -112,9 +113,9 @@ public class Tutor implements Serializable {
     }
 
     //metoda save all to file serizable
-    public static List<Tutor> getTutorList() {
-        return Collections.unmodifiableList(new ArrayList<>(tutorList));
-    }
+//    public static List<Tutor> getTutorList() {
+//        return Collections.unmodifiableList(new ArrayList<>(tutorList));
+//    }
 
     public String getName() {
         return name;

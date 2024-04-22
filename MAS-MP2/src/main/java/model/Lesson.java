@@ -1,6 +1,8 @@
 package model;
 
 import enums.LessonStatus;
+import exceptions.AttributeConstraintViolationException;
+import features.EkstensjaClass;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,9 +14,10 @@ public class Lesson implements Serializable {
     private String address;
 
     public Lesson(LocalDate date, LessonStatus lessonStatus, String address) {
-        this.date = date;
-        this.lessonStatus = lessonStatus;
-        this.address = address;
+        this.setDate(date);
+        this.setLessonStatus(lessonStatus);
+        this.setAddress(address);
+        EkstensjaClass.addLesson(this);
     }
 
     public LocalDate getDate() {
@@ -22,6 +25,8 @@ public class Lesson implements Serializable {
     }
 
     public void setDate(LocalDate date) {
+        if (date == null)
+            throw new AttributeConstraintViolationException("Date can not by null");
         this.date = date;
     }
 
@@ -30,6 +35,8 @@ public class Lesson implements Serializable {
     }
 
     public void setLessonStatus(LessonStatus lessonStatus) {
+        if (lessonStatus == null)
+            throw new AttributeConstraintViolationException("Lesson Status can not by null");
         this.lessonStatus = lessonStatus;
     }
 
@@ -37,8 +44,12 @@ public class Lesson implements Serializable {
         return address;
     }
 
-    public void setAddress(String adress) {
-        this.address = adress;
+    public void setAddress(String address) {
+        if (address == null)
+            throw new AttributeConstraintViolationException("Address can not by null");
+        if (address.isEmpty())
+            throw new AttributeConstraintViolationException("Address can not by empty");
+        this.address = address;
     }
 
     @Override

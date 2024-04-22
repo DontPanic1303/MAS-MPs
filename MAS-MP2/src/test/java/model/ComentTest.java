@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +13,7 @@ public class ComentTest {
     @Test
     public void createCommentWithAllArgumentsSuccess(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "i",
                 now
@@ -30,7 +29,7 @@ public class ComentTest {
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
                     LocalDate now = LocalDate.now();
-                    Coment coment = new Coment(
+                    Comment coment = new Comment(
                             null,
                             "i",
                             now
@@ -44,7 +43,7 @@ public class ComentTest {
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
                     LocalDate now = LocalDate.now();
-                    Coment coment = new Coment(
+                    Comment coment = new Comment(
                             "i like this",
                             null,
                             now
@@ -57,7 +56,7 @@ public class ComentTest {
     public void createCommentWithDateNull(){
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
-                    Coment coment = new Coment(
+                    Comment coment = new Comment(
                             "i like this",
                             "i",
                             null
@@ -71,7 +70,7 @@ public class ComentTest {
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
                     LocalDate now = LocalDate.now();
-                    Coment coment = new Coment(
+                    Comment coment = new Comment(
                             "",
                             "i",
                             now
@@ -85,7 +84,7 @@ public class ComentTest {
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
                     LocalDate now = LocalDate.now();
-                    Coment coment = new Coment(
+                    Comment coment = new Comment(
                             "i like this",
                             "",
                             now
@@ -97,7 +96,7 @@ public class ComentTest {
     @Test
     public void setContentSuccess(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "",
                 now
@@ -109,7 +108,7 @@ public class ComentTest {
     @Test
     public void setContentNull(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "",
                 now
@@ -124,7 +123,7 @@ public class ComentTest {
     @Test
     public void setContentEmpty(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "",
                 now
@@ -139,7 +138,7 @@ public class ComentTest {
     @Test
     public void setTitleSuccess(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "",
                 now
@@ -151,7 +150,7 @@ public class ComentTest {
     @Test
     public void setTitleNull(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "",
                 now
@@ -166,7 +165,7 @@ public class ComentTest {
     @Test
     public void setTitleEmpty(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "",
                 now
@@ -181,7 +180,7 @@ public class ComentTest {
     @Test
     public void setDateSuccess(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "",
                 now
@@ -194,7 +193,7 @@ public class ComentTest {
     @Test
     public void setDateNull(){
         LocalDate now = LocalDate.now();
-        Coment coment = new Coment(
+        Comment coment = new Comment(
                 "i like this",
                 "",
                 now
