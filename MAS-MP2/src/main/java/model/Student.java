@@ -5,6 +5,7 @@ import features.EkstensjaClass;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +15,9 @@ public class Student implements Serializable {
     private String surName;
     private LocalDate birthDate;
     private String email;
+    private Map<String, Competition> competitions = new HashMap<>();
+    private Set<Comment> comments = new HashSet<>();
+    private Set<Lesson> lessons = new HashSet<>();
 
     public Student(String name, String surName, LocalDate birthDate, String email) {
         this.setName(name);
@@ -21,6 +25,46 @@ public class Student implements Serializable {
         this.setBirthDate(birthDate);
         this.setEmail(email);
         EkstensjaClass.addStudent(this);
+    }
+
+    public Map<String, Competition> getCompetitions() {
+        return new HashMap<>(competitions);
+    }
+
+    public Competition getCompetitionByName(String name) {
+        return null;
+    }
+
+    public void addCompetition(Competition c) {
+
+    }
+
+    public void removeCompetition(Competition c) {
+
+    }
+
+    public Set<Comment> getComments() {
+        return Collections.unmodifiableSet(comments);
+    }
+
+    public void addTask(Comment c) {
+
+    }
+
+    public void removeTask(Comment c) {
+
+    }
+
+    public void addLesson(Lesson l){
+        this.lessons.add(l);
+    }
+
+    public void removeLesson(Lesson l){
+        this.lessons.remove(l);
+    }
+
+    public Set<Lesson> getLessons() {
+        return Collections.unmodifiableSet(lessons);
     }
 
     public String getName() {

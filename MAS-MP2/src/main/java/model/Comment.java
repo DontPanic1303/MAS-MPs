@@ -11,12 +11,18 @@ public class Comment implements Serializable {
     private String content;
     private String title;
     private LocalDate date;
+    private Student commentator;
 
-    public Comment(String content, String title, LocalDate date) {
+    public Comment(String content, String title, LocalDate date, Student commentator) {
         this.setContent(content);
         this.setTitle(title);
         this.setDate(date);
+        this.commentator = commentator;
         EkstensjaClass.addComment(this);
+    }
+
+    public Student getCommentator(){
+        return commentator;
     }
 
     public String getContent() {

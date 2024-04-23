@@ -12,12 +12,37 @@ public class Lesson implements Serializable {
     private LocalDate date;
     private LessonStatus lessonStatus;
     private String address;
+    private Tutor tutor;
+    private Student student;
 
-    public Lesson(LocalDate date, LessonStatus lessonStatus, String address) {
+    public Lesson(LocalDate date, LessonStatus lessonStatus, String address, Tutor tutor, Student student) {
         this.setDate(date);
         this.setLessonStatus(lessonStatus);
         this.setAddress(address);
+        this.tutor = tutor;
+        this.student = student;
         EkstensjaClass.addLesson(this);
+    }
+
+    private void setTutor(Tutor tutor){
+        this.tutor=tutor;
+    }
+
+    private void setStudent(Student student){
+        this.student=student;
+    }
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void delete(){
+        tutor.removeLesson(this);
+        student.removeLesson(this);
     }
 
     public LocalDate getDate() {

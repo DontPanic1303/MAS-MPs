@@ -21,10 +21,11 @@ public class Tutor implements Serializable {
     private String email;
     private String phoneNumber;
     private LocalDate jojningDate;
-//    private Set<String> subjects;
     private Double hourly_salary;
     private static Double minimalHourlySalary = 20.0;
+    private Set<Subject> subjects = new HashSet<>();
 
+    private Set<Lesson> lessons = new HashSet<>();
     private static final String fileName = "tutorList";
 
     public Tutor(String name, String surName, LocalDate birthDate, String email, String phoneNumber, LocalDate jojningDate, Set<String> subjects, Double hourly_salary) {
@@ -116,6 +117,31 @@ public class Tutor implements Serializable {
 //    public static List<Tutor> getTutorList() {
 //        return Collections.unmodifiableList(new ArrayList<>(tutorList));
 //    }
+
+    public void addSubject(Subject s){
+        this.subjects.add(s);
+    }
+
+    public void removeSubject(Subject s){
+        this.subjects.remove(s);
+    }
+
+    public Set<Subject> getSubjects() {
+        return Collections.unmodifiableSet(subjects);
+    }
+
+    public void addLesson(Lesson l){
+        this.lessons.add(l);
+    }
+
+    public void removeLesson(Lesson l){
+        this.lessons.remove(l);
+    }
+
+    public Set<Lesson> getLessons() {
+        return Collections.unmodifiableSet(lessons);
+    }
+
 
     public String getName() {
         return name;
