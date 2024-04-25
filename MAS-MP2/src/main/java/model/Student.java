@@ -36,6 +36,8 @@ public class Student implements Serializable {
     }
 
     public void addCompetition(Competition c) {
+        if (c == null)
+            throw new IllegalArgumentException("Competition can not be null");
         if (competitions.containsValue(c))
             return;
         competitions.put(c.getName(),c);
@@ -43,6 +45,8 @@ public class Student implements Serializable {
     }
 
     public void removeCompetition(Competition c) {
+        if (c == null)
+            throw new IllegalArgumentException("Competition can not be null");
         if (!competitions.containsValue(c))
             return;
         competitions.remove(c.getName());
@@ -65,6 +69,8 @@ public class Student implements Serializable {
     }
 
     public void removeComments(Comment c) {
+        if (c == null)
+            throw new IllegalArgumentException("Comment can not be null");
         if (!comments.contains(c))
             return;
         this.comments.remove(c);
@@ -72,12 +78,23 @@ public class Student implements Serializable {
     }
 
     public void addLesson(Lesson l){
+        if (l == null)
+            throw new IllegalArgumentException("Lesson can not be null");
+        Lesson result = EkstensjaClass.getLessonList().stream()
+                .filter(lesson -> lesson.equals(l))
+                .findFirst().orElse(null);
+        if (result == null)
+            throw new IllegalArgumentException("This lesson dont exists");
+        if (result.getStudent() != this)
+            throw new IllegalArgumentException("This lesson have different student");
         if (lessons.contains(l))
             return;
         this.lessons.add(l);
     }
 
     public void removeLesson(Lesson l){
+        if (l == null)
+            throw new IllegalArgumentException("Lesson can not be null");
         if (!lessons.contains(l))
             return;
         this.lessons.remove(l);

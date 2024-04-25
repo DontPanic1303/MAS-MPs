@@ -79,6 +79,8 @@ public class Tutor implements Serializable {
 
 
     public void addSubject(Subject s){
+        if (s == null)
+            throw new IllegalArgumentException("Subject can not be null");
         if (subjects.contains(s))
             return;
         this.subjects.add(s);
@@ -86,6 +88,8 @@ public class Tutor implements Serializable {
     }
 
     public void removeSubject(Subject s){
+        if (s == null)
+            throw new IllegalArgumentException("Subject can not be null");
         if (!subjects.contains(s))
             return;
         this.subjects.remove(s);
@@ -97,12 +101,23 @@ public class Tutor implements Serializable {
     }
 
     public void addLesson(Lesson l){
+        if (l == null)
+            throw new IllegalArgumentException("Lesson can not be null");
+        Lesson result = EkstensjaClass.getLessonList().stream()
+                .filter(lesson -> lesson.equals(l))
+                .findFirst().orElse(null);
+        if (result == null)
+            throw new IllegalArgumentException("This lesson dont exists");
+        if (result.getTutor() != this)
+            throw new IllegalArgumentException("This lesson have different tutor");
         if (lessons.contains(l))
             return;
         this.lessons.add(l);
     }
 
     public void removeLesson(Lesson l){
+        if (l == null)
+            throw new IllegalArgumentException("Lesson can not be null");
         if (!lessons.contains(l))
             return;
         this.lessons.remove(l);

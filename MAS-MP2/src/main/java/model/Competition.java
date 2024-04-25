@@ -29,7 +29,9 @@ public class Competition implements Serializable {
             return;
         }
 
-        this.subject.removeCompetition(this);
+        if (this.subject!=null)
+            this.subject.removeCompetition(this);
+
         if (subject != null) {
             subject.addCompetition(this);
         }
@@ -44,7 +46,13 @@ public class Competition implements Serializable {
         this.subject = null;
     }
 
+    public Subject getSubject(){
+        return subject;
+    }
+
     public void addParticipant(Student s){
+        if (s == null)
+            throw new IllegalArgumentException("Participant can not be null");
         if (participants.contains(s))
             return;
         this.participants.add(s);
@@ -52,6 +60,8 @@ public class Competition implements Serializable {
     }
 
     public void removeParticipant(Student s){
+        if (s == null)
+            throw new IllegalArgumentException("Participant can not be null");
         if (!participants.contains(s))
             return;
         this.participants.remove(s);

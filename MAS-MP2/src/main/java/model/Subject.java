@@ -22,6 +22,8 @@ public class Subject implements Serializable {
     }
 
     public void addTutor(Tutor t){
+        if (t == null)
+            throw new IllegalArgumentException("Tutor can not be null");
         if (tutors.contains(t))
             return;
         this.tutors.add(t);
@@ -29,6 +31,8 @@ public class Subject implements Serializable {
     }
 
     public void removeTutor(Tutor t){
+        if (t == null)
+            throw new IllegalArgumentException("Tutor can not be null");
         if (!tutors.contains(t))
             return;
         this.tutors.remove(t);
@@ -40,6 +44,8 @@ public class Subject implements Serializable {
     }
 
     public void addCompetition(Competition c){
+        if (c == null)
+            throw new IllegalArgumentException("Competition can not be null");
         if (competitions.contains(c))
             return;
         this.competitions.add(c);
@@ -47,6 +53,8 @@ public class Subject implements Serializable {
     }
 
     public void removeCompetition(Competition c){
+        if (c == null)
+            throw new IllegalArgumentException("Competition can not be null");
         if (!competitions.contains(c))
             return;
         this.competitions.remove(c);

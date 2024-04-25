@@ -89,6 +89,11 @@ public class EkstensjaClass {
         competitionList.add(competition);
     }
 
+    //for test
+    public static void cleanCompetition(){
+        competitionList = new HashSet<>();
+    }
+
     public static void addLesson(Lesson lesson){
         if (lesson == null)
             throw new AttributeConstraintViolationException("Lesson can not by null");

@@ -21,25 +21,34 @@ public class Lesson implements Serializable {
         this.setAddress(address);
         this.setTutor(tutor);
         this.setStudent(student);
+        checkIfExists();
         EkstensjaClass.addLesson(this);
+        tutor.addLesson(this);
+        student.addLesson(this);
+    }
+
+    private void checkIfExists(){
+        Lesson result = EkstensjaClass.getLessonList().stream()
+                .filter(lesson -> lesson.getTutor().equals(tutor) && lesson.getStudent().equals(student))
+                .findFirst().orElse(null);
+        if (result != null)
+            throw new IllegalArgumentException("This lesson already exists");
     }
 
     private void setTutor(Tutor tutor){
         if (tutor==null) {
             this.delete();
-            throw new AttributeConstraintViolationException("Tutor can not by null");
+            throw new IllegalArgumentException("Tutor can not by null");
         }
         this.tutor=tutor;
-        tutor.addLesson(this);
     }
 
     private void setStudent(Student student){
         if (student==null) {
             this.delete();
-            throw new AttributeConstraintViolationException("Student can not by null");
+            throw new IllegalArgumentException("Student can not by null");
         }
         this.student=student;
-        student.addLesson(this);
     }
 
     public Tutor getTutor() {
@@ -51,8 +60,16 @@ public class Lesson implements Serializable {
     }
 
     public void delete(){
-        tutor.removeLesson(this);
-        student.removeLesson(this);
+        if (tutor != null) {
+            tutor.removeLesson(this);
+            tutor = null;
+        }
+
+        if (student != null) {
+            student.removeLesson(this);
+            student = null;
+        }
+
         EkstensjaClass.removeLesson(this);
     }
 
