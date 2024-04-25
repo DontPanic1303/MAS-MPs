@@ -73,6 +73,14 @@ public class EkstensjaClass {
         commentList.add(comment);
     }
 
+    public static void removeComment(Comment comment){
+        if (comment == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (!commentList.contains(comment))
+            return;
+        commentList.remove(comment);
+    }
+
     public static void addCompetition(Competition competition){
         if (competition == null)
             throw new AttributeConstraintViolationException("Competition can not by null");
@@ -87,6 +95,14 @@ public class EkstensjaClass {
         if (lessonList.contains(lesson))
             throw new AttributeConstraintViolationException("Lesson already exists in set");
         lessonList.add(lesson);
+    }
+
+    public static void removeLesson(Lesson lesson){
+        if (lesson == null)
+            throw new AttributeConstraintViolationException("Lesson can not by null");
+        if (!lessonList.contains(lesson))
+            return;
+        lessonList.remove(lesson);
     }
     public static void addStudent(Student student){
         if (student == null)

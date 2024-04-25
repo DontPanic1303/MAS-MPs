@@ -17,8 +17,21 @@ public class Comment implements Serializable {
         this.setContent(content);
         this.setTitle(title);
         this.setDate(date);
-        this.commentator = commentator;
+        this.setCommentator(commentator);
         EkstensjaClass.addComment(this);
+    }
+
+    private void setCommentator(Student commentator){
+        if (commentator == null)
+            throw new AttributeConstraintViolationException("Commentator can not by null");
+        this.commentator=commentator;
+        commentator.addComments(this);
+    }
+
+    public void delete(){
+        commentator.removeComments(this);
+        EkstensjaClass.removeComment(this);
+        this.commentator = null;
     }
 
     public Student getCommentator(){

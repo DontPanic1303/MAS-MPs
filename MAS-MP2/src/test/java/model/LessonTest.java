@@ -4,19 +4,44 @@ import enums.LessonStatus;
 import exceptions.AttributeConstraintViolationException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LessonTest {
+
+    Student student;
+    Tutor tutor;
+    @BeforeEach
+    public void createComentator(){
+        LocalDate birthdate = LocalDate.of(2000,1,1);
+        student = new Student(
+                "Jan",
+                "Kowalski",
+                birthdate,
+                "jan.kowalski@wp.pl"
+        );
+        tutor = new Tutor(
+                "Jan",
+                "Kowalski",
+                LocalDate.of(1990,11,11),
+                "jan.kowalski@gmail.com",
+                "123456789",
+                LocalDate.now(),
+                50.0
+        );
+    }
     @Test
     public void createLessonWithAllArgumentsSuccess(){
         LocalDate date = LocalDate.of(2024,5,13);
         Lesson lesson = new Lesson(
                 date,
                 LessonStatus.BOOKED,
-                "kolorowa 132"
+                "kolorowa 132",
+                tutor,
+                student
         );
 
         Assertions.assertEquals(LessonStatus.BOOKED,lesson.getLessonStatus());
@@ -32,7 +57,9 @@ public class LessonTest {
                     Lesson lesson = new Lesson(
                             null,
                             LessonStatus.BOOKED,
-                            "kolorowa 132"
+                            "kolorowa 132",
+                            tutor,
+                            student
                     );
                 }
         );
@@ -46,7 +73,9 @@ public class LessonTest {
                     Lesson lesson = new Lesson(
                             date,
                             LessonStatus.BOOKED,
-                            null
+                            null,
+                            tutor,
+                            student
                     );
                 }
         );
@@ -60,7 +89,9 @@ public class LessonTest {
                     Lesson lesson = new Lesson(
                             date,
                             null,
-                            "kolorowa 132"
+                            "kolorowa 132",
+                            tutor,
+                            student
                     );
                 }
         );
@@ -74,7 +105,9 @@ public class LessonTest {
                     Lesson lesson = new Lesson(
                             date,
                             LessonStatus.BOOKED,
-                            ""
+                            "",
+                            tutor,
+                            student
                     );
                 }
         );
@@ -86,7 +119,9 @@ public class LessonTest {
         Lesson lesson = new Lesson(
                 date,
                 LessonStatus.BOOKED,
-                "kolorowa 132"
+                "kolorowa 132",
+                tutor,
+                student
         );
         lesson.setAddress("nowt świat 4");
         Assertions.assertEquals("nowt świat 4",lesson.getAddress());
@@ -98,7 +133,9 @@ public class LessonTest {
         Lesson lesson = new Lesson(
                 date,
                 LessonStatus.BOOKED,
-                "kolorowa 132"
+                "kolorowa 132",
+                tutor,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
@@ -113,7 +150,9 @@ public class LessonTest {
         Lesson lesson = new Lesson(
                 date,
                 LessonStatus.BOOKED,
-                "kolorowa 132"
+                "kolorowa 132",
+                tutor,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
@@ -128,7 +167,9 @@ public class LessonTest {
         Lesson lesson = new Lesson(
                 date,
                 LessonStatus.BOOKED,
-                "kolorowa 132"
+                "kolorowa 132",
+                tutor,
+                student
         );
         lesson.setLessonStatus(LessonStatus.COMPLETED);
         Assertions.assertEquals(LessonStatus.COMPLETED,lesson.getLessonStatus());
@@ -140,7 +181,9 @@ public class LessonTest {
         Lesson lesson = new Lesson(
                 date,
                 LessonStatus.BOOKED,
-                "kolorowa 132"
+                "kolorowa 132",
+                tutor,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
@@ -155,7 +198,9 @@ public class LessonTest {
         Lesson lesson = new Lesson(
                 date,
                 LessonStatus.BOOKED,
-                "kolorowa 132"
+                "kolorowa 132",
+                tutor,
+                student
         );
         date = LocalDate.of(2024,5,14);
         lesson.setDate(date);
@@ -168,7 +213,9 @@ public class LessonTest {
         Lesson lesson = new Lesson(
                 date,
                 LessonStatus.BOOKED,
-                "kolorowa 132"
+                "kolorowa 132",
+                tutor,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {

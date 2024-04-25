@@ -22,11 +22,17 @@ public class Subject implements Serializable {
     }
 
     public void addTutor(Tutor t){
+        if (tutors.contains(t))
+            return;
         this.tutors.add(t);
+        t.addSubject(this);
     }
 
     public void removeTutor(Tutor t){
+        if (!tutors.contains(t))
+            return;
         this.tutors.remove(t);
+        t.removeSubject(this);
     }
 
     public Set<Tutor> getTutors() {
@@ -34,11 +40,17 @@ public class Subject implements Serializable {
     }
 
     public void addCompetition(Competition c){
+        if (competitions.contains(c))
+            return;
         this.competitions.add(c);
+        c.setSubject(this);
     }
 
     public void removeCompetition(Competition c){
+        if (!competitions.contains(c))
+            return;
         this.competitions.remove(c);
+        c.removeSubject(this);
     }
 
     public Set<Competition> getCompetitions() {

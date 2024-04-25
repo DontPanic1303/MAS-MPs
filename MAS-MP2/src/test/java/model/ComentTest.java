@@ -3,6 +3,7 @@ package model;
 import exceptions.AttributeConstraintViolationException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDate;
 
@@ -10,13 +11,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ComentTest {
 
+    Student student;
+    @BeforeEach
+    public void createComentator(){
+        LocalDate birthdate = LocalDate.of(2000,1,1);
+        student = new Student(
+                "Jan",
+                "Kowalski",
+                birthdate,
+                "jan.kowalski@wp.pl"
+        );
+    }
+
     @Test
     public void createCommentWithAllArgumentsSuccess(){
         LocalDate now = LocalDate.now();
         Comment coment = new Comment(
                 "i like this",
                 "i",
-                now
+                now,
+                student
         );
 
         Assertions.assertEquals("i like this",coment.getContent());
@@ -32,7 +46,8 @@ public class ComentTest {
                     Comment coment = new Comment(
                             null,
                             "i",
-                            now
+                            now,
+                            student
                     );
                 }
         );
@@ -46,7 +61,8 @@ public class ComentTest {
                     Comment coment = new Comment(
                             "i like this",
                             null,
-                            now
+                            now,
+                            student
                     );
                 }
         );
@@ -59,7 +75,8 @@ public class ComentTest {
                     Comment coment = new Comment(
                             "i like this",
                             "i",
-                            null
+                            null,
+                            student
                     );
                 }
         );
@@ -73,7 +90,8 @@ public class ComentTest {
                     Comment coment = new Comment(
                             "",
                             "i",
-                            now
+                            now,
+                            student
                     );
                 }
         );
@@ -87,7 +105,8 @@ public class ComentTest {
                     Comment coment = new Comment(
                             "i like this",
                             "",
-                            now
+                            now,
+                            student
                     );
                 }
         );
@@ -99,7 +118,8 @@ public class ComentTest {
         Comment coment = new Comment(
                 "i like this",
                 "",
-                now
+                now,
+                student
         );
         coment.setContent("Paweł");
         Assertions.assertEquals("Paweł",coment.getContent());
@@ -111,7 +131,8 @@ public class ComentTest {
         Comment coment = new Comment(
                 "i like this",
                 "",
-                now
+                now,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
@@ -126,7 +147,8 @@ public class ComentTest {
         Comment coment = new Comment(
                 "i like this",
                 "",
-                now
+                now,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
@@ -141,7 +163,8 @@ public class ComentTest {
         Comment coment = new Comment(
                 "i like this",
                 "",
-                now
+                now,
+                student
         );
         coment.setTitle("Paweł");
         Assertions.assertEquals("Paweł",coment.getTitle());
@@ -153,7 +176,8 @@ public class ComentTest {
         Comment coment = new Comment(
                 "i like this",
                 "",
-                now
+                now,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
@@ -168,7 +192,8 @@ public class ComentTest {
         Comment coment = new Comment(
                 "i like this",
                 "",
-                now
+                now,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
@@ -183,7 +208,8 @@ public class ComentTest {
         Comment coment = new Comment(
                 "i like this",
                 "",
-                now
+                now,
+                student
         );
         now = LocalDate.now();
         coment.setDate(now);
@@ -196,7 +222,8 @@ public class ComentTest {
         Comment coment = new Comment(
                 "i like this",
                 "",
-                now
+                now,
+                student
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {

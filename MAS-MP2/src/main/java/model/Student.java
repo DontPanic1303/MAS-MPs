@@ -32,35 +32,56 @@ public class Student implements Serializable {
     }
 
     public Competition getCompetitionByName(String name) {
-        return null;
+        return competitions.get(name);
     }
 
     public void addCompetition(Competition c) {
-
+        if (competitions.containsValue(c))
+            return;
+        competitions.put(c.getName(),c);
+        c.addParticipant(this);
     }
 
     public void removeCompetition(Competition c) {
-
+        if (!competitions.containsValue(c))
+            return;
+        competitions.remove(c.getName());
+        c.removeParticipant(this);
     }
 
     public Set<Comment> getComments() {
         return Collections.unmodifiableSet(comments);
     }
 
-    public void addTask(Comment c) {
-
+    public void addComments(Comment c) {
+        Comment result = EkstensjaClass.getCommentList().stream()
+                .filter(comment -> comment.equals(c))
+                .findFirst().orElse(null);
+        if (result == null)
+            throw new IllegalArgumentException("This comment dos not exists");
+        if (result.getCommentator() != this)
+            throw new IllegalArgumentException("Comment can not have more that one owner");
+        this.comments.add(c);
     }
 
-    public void removeTask(Comment c) {
-
+    public void removeComments(Comment c) {
+        if (!comments.contains(c))
+            return;
+        this.comments.remove(c);
+        c.delete();
     }
 
     public void addLesson(Lesson l){
+        if (lessons.contains(l))
+            return;
         this.lessons.add(l);
     }
 
     public void removeLesson(Lesson l){
+        if (!lessons.contains(l))
+            return;
         this.lessons.remove(l);
+        l.delete();
     }
 
     public Set<Lesson> getLessons() {

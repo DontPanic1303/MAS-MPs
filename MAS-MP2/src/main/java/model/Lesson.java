@@ -19,17 +19,27 @@ public class Lesson implements Serializable {
         this.setDate(date);
         this.setLessonStatus(lessonStatus);
         this.setAddress(address);
-        this.tutor = tutor;
-        this.student = student;
+        this.setTutor(tutor);
+        this.setStudent(student);
         EkstensjaClass.addLesson(this);
     }
 
     private void setTutor(Tutor tutor){
+        if (tutor==null) {
+            this.delete();
+            throw new AttributeConstraintViolationException("Tutor can not by null");
+        }
         this.tutor=tutor;
+        tutor.addLesson(this);
     }
 
     private void setStudent(Student student){
+        if (student==null) {
+            this.delete();
+            throw new AttributeConstraintViolationException("Student can not by null");
+        }
         this.student=student;
+        student.addLesson(this);
     }
 
     public Tutor getTutor() {
@@ -43,6 +53,7 @@ public class Lesson implements Serializable {
     public void delete(){
         tutor.removeLesson(this);
         student.removeLesson(this);
+        EkstensjaClass.removeLesson(this);
     }
 
     public LocalDate getDate() {

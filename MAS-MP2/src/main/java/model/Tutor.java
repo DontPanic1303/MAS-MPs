@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class Tutor implements Serializable {
 
-//    private static Set<Tutor> tutorList = new HashSet<>();
+
 
     private String name;
     private String surName;
@@ -28,25 +28,23 @@ public class Tutor implements Serializable {
     private Set<Lesson> lessons = new HashSet<>();
     private static final String fileName = "tutorList";
 
-    public Tutor(String name, String surName, LocalDate birthDate, String email, String phoneNumber, LocalDate jojningDate, Set<String> subjects, Double hourly_salary) {
+    public Tutor(String name, String surName, LocalDate birthDate, String email, String phoneNumber, LocalDate jojningDate, Double hourly_salary) {
         this.setName(name);
         this.setSurName(surName);
         this.setBirthDate(birthDate);
         this.setEmail(email);
         this.setJojningDate(jojningDate);
-//        this.setSubjects(subjects);
         this.setHourly_salary(hourly_salary);
         this.setPhoneNumber(phoneNumber);
         EkstensjaClass.addTutor(this);
     }
 
-    public Tutor(String name, String surName, LocalDate birthDate, String email, LocalDate jojningDate, Set<String> subjects, Double hourly_salary) {
+    public Tutor(String name, String surName, LocalDate birthDate, String email, LocalDate jojningDate, Double hourly_salary) {
         this.setName(name);
         this.setSurName(surName);
         this.setBirthDate(birthDate);
         this.setEmail(email);
         this.setJojningDate(jojningDate);
-//        this.setSubjects(subjects);
         this.setHourly_salary(hourly_salary);
         EkstensjaClass.addTutor(this);
     }
@@ -65,40 +63,6 @@ public class Tutor implements Serializable {
         };
     }
 
-//    public static Set<Tutor> FindTutorsBySubject(String subject) {
-//        var tutorsToTeturn = new HashSet<Tutor>();
-//
-//        for (Tutor tutor: Tutor.getTutorList()) {
-//            for (String sub: tutor.getSubjects()) {
-//                if (sub.equals(subject)) {
-//                    tutorsToTeturn.add(tutor);
-//                    break;
-//                }
-//            }
-//        }
-//        return tutorsToTeturn;
-//    }
-
-//    public static void saveExtensjaToFile() {
-//        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
-//            outputStream.writeObject(tutorList);
-//            System.out.println("All tutors saved to file");
-//        } catch (IOException e) {
-//            System.err.println("Error on saved: " + e.getMessage());
-//        }
-//    }
-//
-//    public static void loadExtensjaFromFile() {
-//        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))) {
-//            tutorList = (Set<Tutor>) inputStream.readObject();
-//            System.out.println("All tutors loaded from file");
-//        } catch (FileNotFoundException e) {
-//            System.err.println("File do not exists");
-//        } catch (IOException | ClassNotFoundException e) {
-//            System.err.println("Error on saved: " + e.getMessage());
-//        }
-//    }
-
     @Override
     public String toString() {
         return "Tutor{" +
@@ -113,17 +77,19 @@ public class Tutor implements Serializable {
                 '}';
     }
 
-    //metoda save all to file serizable
-//    public static List<Tutor> getTutorList() {
-//        return Collections.unmodifiableList(new ArrayList<>(tutorList));
-//    }
 
     public void addSubject(Subject s){
+        if (subjects.contains(s))
+            return;
         this.subjects.add(s);
+        s.addTutor(this);
     }
 
     public void removeSubject(Subject s){
+        if (!subjects.contains(s))
+            return;
         this.subjects.remove(s);
+        s.removeTutor(this);
     }
 
     public Set<Subject> getSubjects() {
@@ -131,11 +97,16 @@ public class Tutor implements Serializable {
     }
 
     public void addLesson(Lesson l){
+        if (lessons.contains(l))
+            return;
         this.lessons.add(l);
     }
 
     public void removeLesson(Lesson l){
+        if (!lessons.contains(l))
+            return;
         this.lessons.remove(l);
+        l.delete();
     }
 
     public Set<Lesson> getLessons() {
@@ -228,49 +199,6 @@ public class Tutor implements Serializable {
         this.jojningDate = localDate;
     }
 
-//    public Set<String> getSubjects() {
-//        return Collections.unmodifiableSet(subjects);
-//    }
-//
-//    public void setSubjects(Set<String> subjects) {
-//        if (subjects == null)
-//            throw new AttributeConstraintViolationException("Subjects can not by null");
-//        if (subjects.isEmpty())
-//            throw new AttributeConstraintViolationException("Subjects can not by empty");
-//        for (String subject: subjects) {
-//            if (subject == null)
-//                throw new AttributeConstraintViolationException("Subject can not by null");
-//            if (subject.isEmpty())
-//                throw new AttributeConstraintViolationException("Subject can not by empty");
-//        }
-//        this.subjects = subjects;
-//    }
-//
-//    public void addSubject(String subject){
-//        if (subject == null)
-//            throw new AttributeConstraintViolationException("Subjects can not by null");
-//        if (subject.isEmpty())
-//            throw new AttributeConstraintViolationException("Subjects can not by empty");
-//        if (this.subjects.contains(subject))
-//            throw new AttributeConstraintViolationException("Subjects already exists in set");
-//        var updatedSubjects = new HashSet<>(this.subjects);
-//        updatedSubjects.add(subject);
-//        this.subjects = updatedSubjects;
-//    }
-//
-//    public void removeSubject(String subject){
-//        if (subject == null)
-//            throw new AttributeConstraintViolationException("Subjects can not by null");
-//        if (subject.isEmpty())
-//            throw new AttributeConstraintViolationException("Subjects can not by empty");
-//        if (!this.subjects.contains(subject))
-//            throw new AttributeConstraintViolationException("Subjects not exists in set");
-//        if (this.subjects.size()<2)
-//            throw new MinimalSetSizeException("The number of subjects can not by less that one");
-//        var updatedSubjects = new HashSet<>(this.subjects);
-//        updatedSubjects.remove(subject);
-//        this.subjects = updatedSubjects;
-//    }
     public double getHourly_salary() {
         return hourly_salary;
     }

@@ -28,24 +28,34 @@ public class Competition implements Serializable {
         if(this.subject == subject) {
             return;
         }
+
+        this.subject.removeCompetition(this);
+        if (subject != null) {
+            subject.addCompetition(this);
+        }
+
         this.subject = subject;
-//        if(newAssociation) {
-//
-//        }
-//        if(deleteAssociation) {
-//
-//        }
-//        if(changeRelation) {
-//
-//        }
+    }
+
+    public void removeSubject(Subject subject){
+        if (this.subject != subject)
+            return;
+        this.subject.removeCompetition(this);
+        this.subject = null;
     }
 
     public void addParticipant(Student s){
+        if (participants.contains(s))
+            return;
         this.participants.add(s);
+        s.addCompetition(this);
     }
 
     public void removeParticipant(Student s){
+        if (!participants.contains(s))
+            return;
         this.participants.remove(s);
+        s.removeCompetition(this);
     }
 
     public Set<Student> getParticipants() {
@@ -82,6 +92,8 @@ public class Competition implements Serializable {
             throw new AttributeConstraintViolationException("Name can not by null");
         if (name.isEmpty())
             throw new AttributeConstraintViolationException("Name can not by empty");
+        if (EkstensjaClass.getCompetitionList().stream().filter(competition -> name.equals(competition.getName())).findAny().orElse(null)!=null)
+            throw new AttributeConstraintViolationException("The name must be unique");
         this.name = name;
     }
 
