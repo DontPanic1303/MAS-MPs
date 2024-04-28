@@ -26,6 +26,7 @@ public class EkstensjaClass {
             oos.writeObject(studentList);
             oos.writeObject(commentList);
             oos.writeObject(competitionList);
+            oos.writeDouble(Tutor.getMinimalHourlySalary());
         }
     }
 
@@ -38,6 +39,7 @@ public class EkstensjaClass {
             studentList = (Set<Student>) ois.readObject();
             commentList = (Set<Comment>) ois.readObject();
             competitionList = (Set<Competition>) ois.readObject();
+            Tutor.setMinimalHourlySalary(ois.readDouble());
         }
     }
 
