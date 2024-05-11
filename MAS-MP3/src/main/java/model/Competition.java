@@ -30,8 +30,7 @@ public class Competition implements Serializable {
         }
 
         if (subject==null){
-            if (this.subject!=null)
-                this.subject.removeCompetition(this);
+            this.subject.removeCompetition(this);
             this.subject=null;
         }
 
