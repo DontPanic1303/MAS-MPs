@@ -43,11 +43,11 @@ public class Tutor extends Person implements Serializable {
         long yearsOfTutoring = ChronoUnit.YEARS.between(this.jojningDate, currentDate);
 
         return switch ((int) yearsOfTutoring){
-            case 0 -> 0.5;
-            case 1 -> 0.55;
-            case 2 -> 0.6;
-            case 3 -> 0.65;
-            default -> 0.7;
+            case 0 -> 0.0;
+            case 1 -> 0.05;
+            case 2 -> 0.10;
+            case 3 -> 0.15;
+            default -> 0.20;
         };
     }
 
@@ -172,4 +172,8 @@ public class Tutor extends Person implements Serializable {
     }
 
 
+    @Override
+    public double payment() {
+        return lessons.size() * ((this.hourly_salary + this.hourly_salary * this.getInternshipBonus()));
+    }
 }

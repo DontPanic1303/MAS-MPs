@@ -24,7 +24,6 @@ public class Student_Competition {
         LocalDate now = LocalDate.now();
         c1 = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         LocalDate birthdate = LocalDate.of(2000,1,1);

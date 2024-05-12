@@ -15,12 +15,10 @@ public class CompetitionTest {
         LocalDate now = LocalDate.now();
         Competition competition = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
 
         Assertions.assertEquals("pierwsze zawody w angielskim sądzie",competition.getName());
-        Assertions.assertEquals("nowy świat 3",competition.getAddress());
         Assertions.assertEquals(now,competition.getDate());
     }
 
@@ -30,26 +28,12 @@ public class CompetitionTest {
                 () -> {
                     Competition competition = new Competition(
                             null,
-                            "nowy świat 3",
                             "pierwsze zawody w angielskim sądzie"
                     );
                 }
         );
     }
 
-    @Test
-    public void createCommentWithAddressNull(){
-        assertThrows(AttributeConstraintViolationException.class,
-                () -> {
-                    LocalDate now = LocalDate.now();
-                    Competition competition = new Competition(
-                            now,
-                            null,
-                            "pierwsze zawody w angielskim sądzie"
-                    );
-                }
-        );
-    }
 
     @Test
     public void createCommentWithNameNull(){
@@ -58,26 +42,12 @@ public class CompetitionTest {
                     LocalDate now = LocalDate.now();
                     Competition competition = new Competition(
                             now,
-                            "nowy świat 3",
                             null
                     );
                 }
         );
     }
 
-    @Test
-    public void createCommentWithAddressEmpty(){
-        assertThrows(AttributeConstraintViolationException.class,
-                () -> {
-                    LocalDate now = LocalDate.now();
-                    Competition competition = new Competition(
-                            now,
-                            "",
-                            "pierwsze zawody w angielskim sądzie"
-                    );
-                }
-        );
-    }
 
     @Test
     public void createCommentWithNameEmpty(){
@@ -86,61 +56,18 @@ public class CompetitionTest {
                     LocalDate now = LocalDate.now();
                     Competition competition = new Competition(
                             now,
-                            "nowy świat 3",
                             ""
                     );
                 }
         );
     }
 
-    @Test
-    public void setAddressSuccess(){
-        LocalDate now = LocalDate.now();
-        Competition competition = new Competition(
-                now,
-                "nowy świat 3",
-                "pierwsze zawody w angielskim sądzie"
-        );
-        competition.setAddress("nowt świat 4");
-        Assertions.assertEquals("nowt świat 4",competition.getAddress());
-    }
-
-    @Test
-    public void setAddressNull(){
-        LocalDate now = LocalDate.now();
-        Competition competition = new Competition(
-                now,
-                "nowy świat 3",
-                "pierwsze zawody w angielskim sądzie"
-        );
-        assertThrows(AttributeConstraintViolationException.class,
-                () -> {
-                    competition.setAddress(null);
-                }
-        );
-    }
-
-    @Test
-    public void setAddressEmpty(){
-        LocalDate now = LocalDate.now();
-        Competition competition = new Competition(
-                now,
-                "nowy świat 3",
-                "pierwsze zawody w angielskim sądzie"
-        );
-        assertThrows(AttributeConstraintViolationException.class,
-                () -> {
-                    competition.setAddress("");
-                }
-        );
-    }
 
     @Test
     public void setNameSuccess(){
         LocalDate now = LocalDate.now();
         Competition competition = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         competition.setName("drugie zawody w angielskim sądzie");
@@ -152,7 +79,6 @@ public class CompetitionTest {
         LocalDate now = LocalDate.now();
         Competition competition = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -167,7 +93,6 @@ public class CompetitionTest {
         LocalDate now = LocalDate.now();
         Competition competition = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -182,7 +107,6 @@ public class CompetitionTest {
         LocalDate now = LocalDate.now();
         Competition competition = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         now = LocalDate.now();
@@ -195,7 +119,6 @@ public class CompetitionTest {
         LocalDate now = LocalDate.now();
         Competition competition = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         assertThrows(AttributeConstraintViolationException.class,
@@ -210,14 +133,12 @@ public class CompetitionTest {
         LocalDate now = LocalDate.now();
         Competition competition = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         assertThrows(AttributeConstraintViolationException.class,
                 () -> {
                     Competition competition2 = new Competition(
                             now,
-                            "nowy świat 3",
                             "pierwsze zawody w angielskim sądzie"
                     );
                 }

@@ -1,6 +1,6 @@
 package enums;
 
 public enum Magic {
-    ZUWIOLOW,
+    ZYWIOLOW,
     RUN
 }

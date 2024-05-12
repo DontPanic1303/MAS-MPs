@@ -21,6 +21,11 @@ public class Student extends Person implements Serializable {
         EkstensjaClass.addStudent(this);
     }
 
+    @Override
+    public double payment() {
+        return lessons.stream().mapToDouble(l -> l.getTutor().getHourly_salary()*2).sum();
+    }
+
     public Map<String, Competition> getCompetitions() {
         return new HashMap<>(competitions);
     }

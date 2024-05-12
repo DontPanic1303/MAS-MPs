@@ -47,7 +47,6 @@ public class EkstensjaClassTest {
         LocalDate now = LocalDate.now();
         Competition competition = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         now = LocalDate.now();

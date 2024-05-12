@@ -2,6 +2,8 @@ package features;
 
 import exceptions.AttributeConstraintViolationException;
 import model.*;
+import model.dynamicInheritance.Lucznik;
+import model.dynamicInheritance.Wojownik;
 
 import java.io.*;
 import java.util.Collections;
@@ -17,6 +19,13 @@ public class EkstensjaClass {
     private static Set<Comment> commentList = new HashSet<>();
     private static Set<Competition> competitionList = new HashSet<>();
 
+    private static Set<Offline> offlineList = new HashSet<>();
+    private static Set<Online> onlineList = new HashSet<>();
+
+    private static Set<Wojownik> wojownikList = new HashSet<>();
+
+    private static Set<Lucznik> lucznikList = new HashSet<>();
+
 
     public static void save(String filename) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
@@ -26,6 +35,8 @@ public class EkstensjaClass {
             oos.writeObject(studentList);
             oos.writeObject(commentList);
             oos.writeObject(competitionList);
+            oos.writeObject(offlineList);
+            oos.writeObject(onlineList);
             oos.writeDouble(Tutor.getMinimalHourlySalary());
         }
     }
@@ -39,8 +50,18 @@ public class EkstensjaClass {
             studentList = (Set<Student>) ois.readObject();
             commentList = (Set<Comment>) ois.readObject();
             competitionList = (Set<Competition>) ois.readObject();
+            offlineList = (Set<Offline>) ois.readObject();
+            onlineList = (Set<Online>) ois.readObject();
             Tutor.setMinimalHourlySalary(ois.readDouble());
         }
+    }
+
+    public static Set<Wojownik> getWojownikList() {
+        return Collections.unmodifiableSet(wojownikList);
+    }
+
+    public static Set<Lucznik> getLucznikList() {
+        return Collections.unmodifiableSet(lucznikList);
     }
 
     public static Set<Tutor> getTutorList() {
@@ -65,6 +86,78 @@ public class EkstensjaClass {
 
     public static Set<Competition> getCompetitionList() {
         return Collections.unmodifiableSet(competitionList);
+    }
+
+    public static Set<Offline> getOfflineList() {
+        return Collections.unmodifiableSet(offlineList);
+    }
+
+    public static Set<Online> getOnlineList() {
+        return Collections.unmodifiableSet(onlineList);
+    }
+
+    public static void addWojownik(Wojownik wojownik){
+        if (wojownik == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (wojownikList.contains(wojownik))
+            throw new AttributeConstraintViolationException("Comment already exists in set");
+        wojownikList.add(wojownik);
+    }
+
+    public static void removeWojownik(Wojownik wojownik){
+        if (wojownik == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (!wojownikList.contains(wojownik))
+            return;
+        wojownikList.remove(wojownik);
+    }
+
+    public static void addLucznik(Lucznik lucznik){
+        if (lucznik == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (lucznikList.contains(lucznik))
+            throw new AttributeConstraintViolationException("Comment already exists in set");
+        lucznikList.add(lucznik);
+    }
+
+    public static void removeLucznik(Lucznik lucznik){
+        if (lucznik == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (!lucznikList.contains(lucznik))
+            return;
+        lucznikList.remove(lucznik);
+    }
+
+    public static void addOffline(Offline offline){
+        if (offline == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (offlineList.contains(offline))
+            throw new AttributeConstraintViolationException("Comment already exists in set");
+        offlineList.add(offline);
+    }
+
+    public static void removeOffline(Offline offline){
+        if (offline == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (!offlineList.contains(offline))
+            return;
+        offlineList.remove(offline);
+    }
+
+    public static void addOnline(Online online){
+        if (online == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (onlineList.contains(online))
+            throw new AttributeConstraintViolationException("Comment already exists in set");
+        onlineList.add(online);
+    }
+
+    public static void removeOnline(Online online){
+        if (online == null)
+            throw new AttributeConstraintViolationException("Comment can not by null");
+        if (!onlineList.contains(online))
+            return;
+        onlineList.remove(online);
     }
 
     public static void addComment(Comment comment){

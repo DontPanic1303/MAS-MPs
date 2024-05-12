@@ -1,6 +1,7 @@
 package model;
 
 import exceptions.AttributeConstraintViolationException;
+import exceptions.nonExistentClassException;
 import features.EkstensjaClass;
 
 import java.io.Serializable;
@@ -12,17 +13,50 @@ import java.util.Set;
 public class Competition implements Serializable {
 
     private LocalDate date;
-    private String address;
     private String name;
     private Subject subject;
     private Set<Student> participants = new HashSet<>();
 
-    public Competition(LocalDate date, String address, String name) {
+    private Offline offline;
+
+    private Online online;
+
+    public Competition(LocalDate date, String name) {
         this.setDate(date);
-        this.setAddress(address);
         this.setName(name);
         EkstensjaClass.addCompetition(this);
     }
+
+    public Competition(LocalDate date, String name, String link){
+        this.setDate(date);
+        this.setName(name);
+        this.online = new Online(this,link);
+        EkstensjaClass.addCompetition(this);
+    }
+
+    public Competition(LocalDate date, String name, String address, int numberOfSits){
+        this.setDate(date);
+        this.setName(name);
+        this.offline = new Offline(this,address,numberOfSits);
+        EkstensjaClass.addCompetition(this);
+    }
+
+    public Competition(LocalDate date, String name, String address, int numberOfSits, String link){
+        this.setDate(date);
+        this.setName(name);
+        try {
+            this.offline = new Offline(this,address,numberOfSits);
+            this.online = new Online(this,link);
+        } catch (Exception e) {
+            if (this.offline != null)
+                this.offline.delete();
+            if (this.online != null)
+                this.online.delete();
+            throw e;
+        }
+        EkstensjaClass.addCompetition(this);
+    }
+
 
     public void setSubject(Subject subject){
         if(this.subject == subject) {
@@ -41,6 +75,86 @@ public class Competition implements Serializable {
             this.subject=subject;
         }
 
+    }
+
+//    public void setOffline(Offline offline){
+//        if(this.offline == offline) {
+//            return;
+//        }
+//
+//        if (offline==null){
+//            this.offline.delete();
+//            this.offline=null;
+//        }
+//
+//        if (this.offline!=offline) {
+//            Offline result = EkstensjaClass.getOfflineList().stream()
+//                    .filter(off -> off.equals(offline))
+//                    .findFirst().orElse(null);
+//            if (result == null)
+//                throw new IllegalArgumentException("This offline dos not exists");
+//            if (result.getCompetition() != this)
+//                throw new IllegalArgumentException("Offline can not have more that one owner");
+//            this.offline.delete();
+//            this.offline=offline;
+//        }
+//
+//    }
+//
+//    public void setOnline(Online online){
+//        if(this.online == online) {
+//            return;
+//        }
+//
+//        if (online==null){
+//            this.online.delete();
+//            this.online=null;
+//        }
+//
+//        if (this.online!=online) {
+//            Online result = EkstensjaClass.getOnlineList().stream()
+//                    .filter(on -> on.equals(online))
+//                    .findFirst().orElse(null);
+//            if (result == null)
+//                throw new IllegalArgumentException("This online dos not exists");
+//            if (result.getCompetition() != this)
+//                throw new IllegalArgumentException("Online can not have more that one owner");
+//            this.online.delete();
+//            this.online=online;
+//        }
+//
+//    }
+
+    public String getLink() {
+        if (this.online == null)
+            throw new nonExistentClassException("Online does not exists");
+        return online.getLink();
+    }
+
+    public void setLink(String link) {
+        if (online == null)
+            throw new nonExistentClassException("Online does not exists");
+        online.setLink(link);
+    }
+
+    public String getAddress() {
+        if (this.offline == null)
+            throw new nonExistentClassException("Offline does not exists");
+        return offline.getAddress();
+    }
+
+    public void setAddress(String address) {
+        if (offline == null)
+            throw new nonExistentClassException("Offline does not exists");
+        offline.setAddress(address);
+    }
+
+    public Offline getOffline() {
+        return offline;
+    }
+
+    public Online getOnline() {
+        return online;
     }
 
     public Subject getSubject(){
@@ -78,17 +192,6 @@ public class Competition implements Serializable {
         this.date = date;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        if (address == null)
-            throw new AttributeConstraintViolationException("Address can not by null");
-        if (address.isEmpty())
-            throw new AttributeConstraintViolationException("Address can not by empty");
-        this.address = address;
-    }
 
     public String getName() {
         return name;
@@ -108,7 +211,6 @@ public class Competition implements Serializable {
     public String toString() {
         return "Competition{" +
                 "date=" + date +
-                ", adress='" + address + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }

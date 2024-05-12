@@ -21,6 +21,8 @@ public abstract class Person {
         this.setEmail(email);
     }
 
+    public abstract double payment();
+
     public String getName() {
         return name;
     }
@@ -74,5 +76,7 @@ public abstract class Person {
 
         this.email = email;
     }
+
+
 
 }

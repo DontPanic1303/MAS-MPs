@@ -22,7 +22,6 @@ public class Subject_Competition {
         LocalDate now = LocalDate.now();
         c1 = new Competition(
                 now,
-                "nowy świat 3",
                 "pierwsze zawody w angielskim sądzie"
         );
         s1 = new Subject(
