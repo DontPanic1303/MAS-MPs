@@ -11,7 +11,7 @@ public class Czarodziej {
     private String zywiol;
     private String runa;
 
-    public Czarodziej(String imie, String nazwisko, Magic magia, String nazwaMagii) {
+    protected Czarodziej(String imie, String nazwisko, Magic magia, String nazwaMagii) {
         this.setImie(imie);
         this.setNazwisko(nazwisko);
         this.setMagia(magia);
