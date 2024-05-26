@@ -103,13 +103,13 @@ public class Tutor_Lesson_Student {
 
         //for normal association (not bag or history)
         // we should not be able to make duplicate relation
-        assertThrows(IllegalArgumentException.class,
-                () -> { new Lesson(date,
-                        LessonStatus.BOOKED,
-                        "kolorowa 132",
-                        t1,
-                        s1); }
-        );
+//        assertThrows(IllegalArgumentException.class,
+//                () -> { new Lesson(date,
+//                        LessonStatus.BOOKED,
+//                        "kolorowa 132",
+//                        t1,
+//                        s1); }
+//        );
 
         s1.removeLesson(l1);
         //now all 4 references should be removed

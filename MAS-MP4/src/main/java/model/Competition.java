@@ -95,7 +95,8 @@ public class Competition implements Serializable {
                 throw new IllegalArgumentException("This offline dos not exists");
             if (result.getCompetition() != this)
                 throw new IllegalArgumentException("Offline can not have more that one owner");
-            this.offline.delete();
+            if (this.offline != null)
+                this.offline.delete();
             this.offline=offline;
         }
 
@@ -119,7 +120,8 @@ public class Competition implements Serializable {
                 throw new IllegalArgumentException("This online dos not exists");
             if (result.getCompetition() != this)
                 throw new IllegalArgumentException("Online can not have more that one owner");
-            this.online.delete();
+            if (this.online != null)
+                this.online.delete();
             this.online=online;
         }
 
