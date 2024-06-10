@@ -1,6 +1,7 @@
 package edu.pjatk.mas.s25278.masmp5.validation;
 
 
+import edu.pjatk.mas.s25278.masmp5.model.Tutor;
 import edu.pjatk.mas.s25278.masmp5.service.ConfigurationService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -13,16 +14,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MinHourlySalaryValidator implements ConstraintValidator<MinHourlySalary, Double> {
 
-    private final ConfigurationService configurationService;
     private double minValue;
 
     @Override
     public void initialize(MinHourlySalary constraintAnnotation) {
-        if(configurationService != null) {
-            this.minValue = configurationService.getMinimalHourlySalary();
-        } else {
-            throw new IllegalStateException("ConfigurationService not initialized");
-        }
+            this.minValue = Tutor.getMinimal_hourly_salary();
     }
 
     @Override

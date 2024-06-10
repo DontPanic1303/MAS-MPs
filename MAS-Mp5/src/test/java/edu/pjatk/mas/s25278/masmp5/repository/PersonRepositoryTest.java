@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.validation.Validator;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -42,6 +43,7 @@ class PersonRepositoryTest {
 
     @BeforeEach
     public void initData() {
+        Tutor.setMinimal_hourly_salary(20.0);
         s1 = Student.builder()
                 .name("Jan")
                 .surName("Kowalski")
@@ -77,7 +79,7 @@ class PersonRepositoryTest {
     @Test
     public void testSaveAll() {
 
-        when(configurationService.getMinimalHourlySalary()).thenReturn(20.0);
+        //when(configurationService.getMinimalHourlySalary()).thenReturn(20.0);
 
         tutorRepository.saveAll(Arrays.asList(t1,t2));
         studentRepository.save(s1);
@@ -89,6 +91,13 @@ class PersonRepositoryTest {
     public void testConfigurationServiceInjection() {
         assertNotNull(configurationService);
     }
+
+//    @Test
+//    public void testTutorToSmallHourlySalary() {
+//        t1.setHourly_salary(10.0);
+//        tutorRepository.save(t1);
+//        entityManager.flush();
+//    }
 
 
 }

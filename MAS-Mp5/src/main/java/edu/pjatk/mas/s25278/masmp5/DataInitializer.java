@@ -19,29 +19,32 @@ public class DataInitializer {
 
     private final SubjectRepository subjectRepository;
     private final TutorRepository tutorRepository;
-   // private final ConfigurationService configurationService;
+    private final ConfigurationService configurationService;
 
     @EventListener
     public void atStart(ContextRefreshedEvent event) {
-        System.out.println("context refreshed");
-        Tutor t1, t2;
-        t1 = Tutor.builder()
-                .name("Janek")
-                .surName("Kowalski")
-                .birthDate(LocalDate.of(1991, 11, 11))
-                .email("janek.kowalski@wp.pl")
-                .hourly_salary(30.0)
-                .jojningDate(LocalDate.now())
-                .build();
-        t2 = Tutor.builder()
-                .name("Franek")
-                .surName("Kowalski")
-                .birthDate(LocalDate.of(1989, 11, 11))
-                .email("franek.kowalski@wp.pl")
-                .hourly_salary(31.0)
-                .jojningDate(LocalDate.now())
-                .build();
-        tutorRepository.saveAll(Arrays.asList(t1,t2));
+
+        configurationService.setMinimalHourlySalary();
+
+        System.out.println(Tutor.getMinimal_hourly_salary());
+//        Tutor t1, t2;
+//        t1 = Tutor.builder()
+//                .name("Janek")
+//                .surName("Kowalski")
+//                .birthDate(LocalDate.of(1991, 11, 11))
+//                .email("janek.kowalski@wp.pl")
+//                .hourly_salary(30.0)
+//                .jojningDate(LocalDate.now())
+//                .build();
+//        t2 = Tutor.builder()
+//                .name("Franek")
+//                .surName("Kowalski")
+//                .birthDate(LocalDate.of(1989, 11, 11))
+//                .email("franek.kowalski@wp.pl")
+//                .hourly_salary(31.0)
+//                .jojningDate(LocalDate.now())
+//                .build();
+//        tutorRepository.saveAll(Arrays.asList(t1,t2));
 
     }
 
