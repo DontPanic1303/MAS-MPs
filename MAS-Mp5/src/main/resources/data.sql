@@ -4,4 +4,4 @@ insert into subject (id, name, level) values
                                           (10002, 'Angielski', 'Podstawowy'),
                                           (10003, 'Angielski', 'Zaawansowany');
 
-INSERT INTO configuration (key, value) VALUES ('minimalHourlySalary', '20.0');
+INSERT INTO configuration (id, config_Key, config_Value) VALUES (1,'minimalHourlySalary', '20.0');

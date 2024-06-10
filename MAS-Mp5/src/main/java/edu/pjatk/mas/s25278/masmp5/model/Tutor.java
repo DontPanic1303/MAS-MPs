@@ -2,12 +2,13 @@ package edu.pjatk.mas.s25278.masmp5.model;
 
 import edu.pjatk.mas.s25278.masmp5.validation.MinHourlySalary;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.NumberFormat;
+import lombok.experimental.SuperBuilder;
+
 
 import java.time.LocalDate;
 
@@ -15,17 +16,20 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class Tutor extends Person {
 
 
-    @NumberFormat
+    @Pattern(regexp = "^(\\d{3}[- .]?){2}\\d{3}$", message = "Invalid phone number format")
     private String phoneNumber;
 
-    @NotBlank
+    @NotNull
     private LocalDate jojningDate;
 
-    @NotBlank
+    @NotNull
     //@MinHourlySalary()
     private Double hourly_salary;
+
+    private static Double minimal_hourly_salary = 0.0;
 
 }

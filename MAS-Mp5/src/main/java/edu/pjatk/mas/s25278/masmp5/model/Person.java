@@ -3,10 +3,12 @@ package edu.pjatk.mas.s25278.masmp5.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
+@SuperBuilder
 public abstract class Person {
 
     @Id
@@ -29,7 +32,7 @@ public abstract class Person {
     @Size(min = 2,max = 255)
     private String surName;
 
-    @NotBlank
+    @NotNull
     private LocalDate birthDate;
 
     @NotBlank(message = "Name is mandatory")
