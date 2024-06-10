@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -24,4 +27,16 @@ public class Subject {
     @NotBlank(message = "Level is mandatory")
     @Size(min = 2,max = 255)
     private String level;
+
+    @ManyToMany
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Tutor> knownBy = new HashSet<>();
+
+    @OneToMany(mappedBy = "subject")
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Competition> competitions = new HashSet<>();
 }

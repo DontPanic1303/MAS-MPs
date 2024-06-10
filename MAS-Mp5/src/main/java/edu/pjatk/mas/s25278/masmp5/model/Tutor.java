@@ -1,8 +1,11 @@
 package edu.pjatk.mas.s25278.masmp5.model;
 
+import edu.pjatk.mas.s25278.masmp5.enums.DayOfTheWeek;
 import edu.pjatk.mas.s25278.masmp5.validation.MinHourlySalary;
-import jakarta.persistence.Entity;
+import edu.pjatk.mas.s25278.masmp5.validation.ValidWorkHours;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -10,6 +13,8 @@ import lombok.experimental.SuperBuilder;
 
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -28,6 +33,21 @@ public class Tutor extends Person {
     @NotNull
     @MinHourlySalary
     private Double hourly_salary;
+
+    @NotBlank(message = "work_hours is mandatory")
+    @ValidWorkHours
+    private String work_hours;
+
+    @NotNull
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    private Set<DayOfTheWeek> work_days = new HashSet<>();
+
+    @ManyToMany
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Subject> subject = new HashSet<>();
 
     @Getter
     private static Double minimal_hourly_salary = 20.0;

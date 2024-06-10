@@ -2,11 +2,8 @@ package edu.pjatk.mas.s25278.masmp5.validation;
 
 
 import edu.pjatk.mas.s25278.masmp5.model.Tutor;
-import edu.pjatk.mas.s25278.masmp5.service.ConfigurationService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -26,5 +26,11 @@ public class Competition {
     @Column(unique = true)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "Subject_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Subject subject;
+
 
 }

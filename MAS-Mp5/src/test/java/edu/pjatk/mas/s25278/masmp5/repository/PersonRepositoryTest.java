@@ -1,5 +1,6 @@
 package edu.pjatk.mas.s25278.masmp5.repository;
 
+import edu.pjatk.mas.s25278.masmp5.enums.DayOfTheWeek;
 import edu.pjatk.mas.s25278.masmp5.model.Student;
 import edu.pjatk.mas.s25278.masmp5.model.Tutor;
 import edu.pjatk.mas.s25278.masmp5.service.ConfigurationService;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.xml.validation.Validator;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -58,6 +60,8 @@ class PersonRepositoryTest {
                 .email("janek.kowalski@wp.pl")
                 .hourly_salary(30.0)
                 .jojningDate(LocalDate.now())
+                .work_hours("8-16")
+                .work_days(Set.of(DayOfTheWeek.CZWARTEK,DayOfTheWeek.NIEDZIELA))
                 .build();
         t2 = Tutor.builder()
                 .name("Franek")
@@ -66,6 +70,8 @@ class PersonRepositoryTest {
                 .email("franek.kowalski@wp.pl")
                 .hourly_salary(31.0)
                 .jojningDate(LocalDate.now())
+                .work_hours("8-16")
+                .work_days(Set.of(DayOfTheWeek.CZWARTEK,DayOfTheWeek.NIEDZIELA))
                 .build();
     }
 
@@ -95,6 +101,13 @@ class PersonRepositoryTest {
 //    @Test
 //    public void testTutorToSmallHourlySalary() {
 //        t1.setHourly_salary(10.0);
+//        tutorRepository.save(t1);
+//        entityManager.flush();
+//    }
+
+//    @Test
+//    public void testTutorInvalidWorkHours() {
+//        t1.setWork_hours("0-kot");
 //        tutorRepository.save(t1);
 //        entityManager.flush();
 //    }
