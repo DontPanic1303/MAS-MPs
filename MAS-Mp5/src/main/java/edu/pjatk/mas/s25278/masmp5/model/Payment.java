@@ -1,10 +1,7 @@
 package edu.pjatk.mas.s25278.masmp5.model;
 
 import edu.pjatk.mas.s25278.masmp5.enums.PaymentStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -33,4 +30,10 @@ public class Payment {
 
     @NotNull
     private PaymentStatus status;
+
+    @OneToOne
+    @JoinColumn(name = "Lesson_id", updatable = false, nullable = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Lesson lesson;
 }

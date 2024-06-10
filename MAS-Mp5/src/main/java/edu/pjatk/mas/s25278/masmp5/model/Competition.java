@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -31,6 +33,22 @@ public class Competition {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Subject subject;
+
+    @ManyToMany
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Student> students = new HashSet<>();
+
+    @OneToOne(mappedBy = "competition", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Offline offline;
+
+    @OneToOne(mappedBy = "competition", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Online online;
 
 
 }

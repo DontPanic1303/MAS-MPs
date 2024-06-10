@@ -98,6 +98,7 @@ class PersonRepositoryTest {
         assertNotNull(configurationService);
     }
 
+
 //    @Test
 //    public void testTutorToSmallHourlySalary() {
 //        t1.setHourly_salary(10.0);

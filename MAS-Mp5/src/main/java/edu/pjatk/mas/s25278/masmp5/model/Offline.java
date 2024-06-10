@@ -1,10 +1,7 @@
 package edu.pjatk.mas.s25278.masmp5.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -22,5 +19,9 @@ public class Offline {
 
     @NotBlank(message = "Address is mandatory")
     private String address;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "competition_id", nullable = false, updatable = false)
+    private Competition competition;
 
 }

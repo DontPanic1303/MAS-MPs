@@ -1,9 +1,6 @@
 package edu.pjatk.mas.s25278.masmp5.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -28,5 +25,17 @@ public class Ban {
 
     @NotNull
     private LocalDate startTime;
+
+    @ManyToOne
+    @JoinColumn(name = "Administrator_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Administrator imposedBy;
+
+    @ManyToOne
+    @JoinColumn(name = "Person_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Person imposedOn;
 
 }

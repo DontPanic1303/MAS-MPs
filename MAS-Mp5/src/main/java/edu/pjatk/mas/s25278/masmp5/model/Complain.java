@@ -1,9 +1,6 @@
 package edu.pjatk.mas.s25278.masmp5.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -31,5 +28,17 @@ public class Complain {
 
     @NotNull
     private LocalDate date;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "accused_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Person accused;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "author_id", nullable = false, updatable = false)
+    private Person author;
+
+
 
 }

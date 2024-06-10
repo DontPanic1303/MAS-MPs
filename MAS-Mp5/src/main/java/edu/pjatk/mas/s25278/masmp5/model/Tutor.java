@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,6 +50,11 @@ public class Tutor extends Person {
     @EqualsAndHashCode.Exclude
     private Set<Subject> subject = new HashSet<>();
 
+    @OneToMany(mappedBy = "tutor", cascade = {CascadeType.REMOVE})
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Lesson> lessons;
+
     @Getter
     private static Double minimal_hourly_salary = 20.0;
 
@@ -56,6 +62,20 @@ public class Tutor extends Person {
         if (minimal_hourly_salary < 0)
             throw new IllegalArgumentException("Minimal hourly salary can not bu on minus");
         Tutor.minimal_hourly_salary = minimal_hourly_salary;
+    }
+
+    public double getInternshipBonus() {
+        LocalDate currentDate = LocalDate.now();
+
+        long yearsOfTutoring = ChronoUnit.YEARS.between(this.jojningDate, currentDate);
+
+        return switch ((int) yearsOfTutoring){
+            case 0 -> 0.0;
+            case 1 -> 0.05;
+            case 2 -> 0.10;
+            case 3 -> 0.15;
+            default -> 0.20;
+        };
     }
 
 }
