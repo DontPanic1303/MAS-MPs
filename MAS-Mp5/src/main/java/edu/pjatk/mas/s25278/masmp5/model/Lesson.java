@@ -3,9 +3,12 @@ package edu.pjatk.mas.s25278.masmp5.model;
 import edu.pjatk.mas.s25278.masmp5.enums.LessonStatus;
 import edu.pjatk.mas.s25278.masmp5.enums.PaymentStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -22,7 +25,12 @@ public class Lesson {
     private Long id;
 
     @NotNull
-    private LocalDateTime startTime;
+    private LocalDate startDate;
+
+    @NotNull
+    @Min(0)
+    @Max(23)
+    private int startTime;
 
     @NotNull
     private LessonStatus lessonStatus;

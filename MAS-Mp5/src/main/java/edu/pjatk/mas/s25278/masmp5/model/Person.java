@@ -34,7 +34,12 @@ public abstract class Person {
 
     @NotBlank(message = "Name is mandatory")
     @Email
+    @Column(unique = true)
     private String email;
+
+    @NotBlank(message = "password is mandatory")
+    @Size(min = 5, max = 255)
+    private String password;
 
     @OneToMany(mappedBy = "imposedOn")
     @Builder.Default

@@ -1,9 +1,6 @@
 package edu.pjatk.mas.s25278.masmp5.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,6 +15,7 @@ import java.util.Set;
 public class Student extends Person{
 
     @ManyToMany
+    @MapKey(name = "name")
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

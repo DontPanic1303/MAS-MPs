@@ -1,0 +1,360 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.subject-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.subject-selection h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.subjects-table {
+  display: table;
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 600px;
+  margin-top: 20px;
+}
+
+.subject-row {
+  display: table-row;
+  border-bottom: 1px solid #ddd;
+}
+
+.subject-cell {
+  display: table-cell;
+  padding: 10px 15px;
+  text-align: left;
+}
+
+.subject-cell button {
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.subject-cell button:hover {
+  background-color: #0056b3;
+}
+.subject-cell a {
+  text-decoration: none;
+}
+
+.tutor-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.tutor-selection h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.tutor-selection button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+}
+
+.tutor-selection button:hover {
+  background-color: #0056b3;
+}
+
+.tutors-table {
+  display: table;
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+.tutor-row {
+  display: table-row;
+  border-bottom: 1px solid #ddd;
+}
+
+.tutor-cell {
+  display: table-cell;
+  padding: 10px 15px;
+  text-align: left;
+}
+
+.tutor-cell button {
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tutor-cell button:hover {
+  background-color: #0056b3;
+}
+
+.tutor-cell a {
+  text-decoration: none;
+}
+
+.lesson-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.back-button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.lesson-selection h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.date-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.date-navigation button {
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.date-navigation button:hover {
+  background-color: #0056b3;
+}
+
+.lessons-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 80%;
+  max-width: 800px;
+}
+
+.lesson-button {
+  flex: 1 1 22%;
+  min-width: 100px;
+  height: 50px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.lesson-button:hover {
+  background-color: #0056b3;
+}
+
+.empty-slot {
+  flex: 1 1 22%;
+  min-width: 100px;
+  height: 50px;
+  background-color: transparent;
+}
+
+.reservation-confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.reservation-confirmation h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.reservation-confirmation h2 {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  flex: 1;
+  margin: 0 10px;
+}
+
+.button-container button:hover {
+  background-color: #0056b3;
+}
+
+.pay-now {
+  text-align: left;
+}
+
+.pay-later {
+  text-align: right;
+}
+
+.conflict-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c2c7;
+  border-radius: 10px;
+}
+
+
+.back-button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.conflict-message h1 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #721c24;
+}
+
+.no-availability-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: #f8f9fa; /* Delikatne tło */
+  border: 1px solid #dee2e6; /* Lekko ciemniejsza ramka */
+  border-radius: 10px; /* Zaokrąglone rogi */
+}
+
+
+.ok-button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.ok-button:hover {
+  background-color: #0056b3;
+}
+
+
+.no-availability-message h1 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #343a40;
+}

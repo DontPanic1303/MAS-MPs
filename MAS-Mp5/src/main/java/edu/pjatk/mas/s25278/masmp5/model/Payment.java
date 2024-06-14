@@ -25,7 +25,6 @@ public class Payment {
     @NotNull
     private Double amount;
 
-    @NotNull
     private LocalDate date;
 
     @NotNull

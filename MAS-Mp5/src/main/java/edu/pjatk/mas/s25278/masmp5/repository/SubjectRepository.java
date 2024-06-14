@@ -12,9 +12,11 @@ import java.util.Set;
 
 public interface SubjectRepository extends CrudRepository<Subject, Long> {
     public List<Subject> findByName(String name);
-    public List<Subject> findByNameAndLevel(String name, String level);
 
  //   @Query("from Subject as s left join fetch s.knownBy as t left join Person on t.id = Person.id where s.id = :id")
     @Query("from Subject as s left join fetch s.knownBy where s.id = :id")
     public Optional<Subject> findById(@Param("id") Long id);
+
+    @Query("from Subject s order by s.name, s.level")
+    public List<Subject> findAll();
 }

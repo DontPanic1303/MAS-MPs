@@ -1,6 +1,7 @@
 package edu.pjatk.mas.s25278.masmp5.repository;
 
 import edu.pjatk.mas.s25278.masmp5.enums.DayOfTheWeek;
+import edu.pjatk.mas.s25278.masmp5.enums.SubjectLevel;
 import edu.pjatk.mas.s25278.masmp5.model.Subject;
 import edu.pjatk.mas.s25278.masmp5.model.Tutor;
 import jakarta.persistence.EntityManager;
@@ -35,7 +36,7 @@ class SubjectRepositoryTest {
     public void initData() {
         s1 = Subject.builder()
                 .name("Fizyka")
-                .level("Podstawowy")
+                .level(SubjectLevel.Podstawowy)
                 .build();
     }
 
@@ -75,11 +76,6 @@ class SubjectRepositoryTest {
         assertEquals(2,polski.size());
     }
 
-    @Test
-    public void testFindByNameAndLevel() {
-        List<Subject> polski = subjectRepository.findByNameAndLevel("Polski", "Podstawowy");
-        assertEquals(1,polski.size());
-    }
 
     @Test
     public void testGetTutorsWhoTeachSubject(){
@@ -87,8 +83,9 @@ class SubjectRepositoryTest {
                 .name("Janek")
                 .surName("Kowalski")
                 .birthDate(LocalDate.of(1991, 11, 11))
-                .email("janek.kowalski@wp.pl")
+                .email("janek2.kowalski@wp.pl")
                 .hourly_salary(30.0)
+                .password("password")
                 .jojningDate(LocalDate.now())
                 .work_hours("8-16")
                 .work_days(Set.of(DayOfTheWeek.CZWARTEK,DayOfTheWeek.NIEDZIELA))
@@ -97,7 +94,8 @@ class SubjectRepositoryTest {
                 .name("Franek")
                 .surName("Kowalski")
                 .birthDate(LocalDate.of(1989, 11, 11))
-                .email("franek.kowalski@wp.pl")
+                .email("franek2.kowalski@wp.pl")
+                .password("password")
                 .hourly_salary(31.0)
                 .jojningDate(LocalDate.now())
                 .work_hours("8-16")

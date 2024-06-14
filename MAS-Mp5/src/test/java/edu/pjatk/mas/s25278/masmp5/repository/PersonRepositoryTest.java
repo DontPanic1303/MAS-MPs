@@ -51,6 +51,7 @@ class PersonRepositoryTest {
                 .surName("Kowalski")
                 .birthDate(LocalDate.of(1990, 11, 11))
                 .email("jan.kowalski@wp.pl")
+                .password("password")
                 .build();
 
         t1 = Tutor.builder()
@@ -58,6 +59,7 @@ class PersonRepositoryTest {
                 .surName("Kowalski")
                 .birthDate(LocalDate.of(1991, 11, 11))
                 .email("janek.kowalski@wp.pl")
+                .password("password")
                 .hourly_salary(30.0)
                 .jojningDate(LocalDate.now())
                 .work_hours("8-16")
@@ -68,6 +70,7 @@ class PersonRepositoryTest {
                 .surName("Kowalski")
                 .birthDate(LocalDate.of(1989, 11, 11))
                 .email("franek.kowalski@wp.pl")
+                .password("password")
                 .hourly_salary(31.0)
                 .jojningDate(LocalDate.now())
                 .work_hours("8-16")
