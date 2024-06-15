@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface TutorRepository extends CrudRepository<Tutor, Long> {
 
@@ -15,5 +16,8 @@ public interface TutorRepository extends CrudRepository<Tutor, Long> {
 
     @Query("from Tutor as t inner join fetch t.subject order by t.surName, t.name")
     public List<Tutor> findAll();
+
+    @Query("from Tutor as t where t.hourly_salary < :hourly_salary")
+    public List<Tutor> findAllByHourly_salaryLessThan(Double hourly_salary);
 
 }

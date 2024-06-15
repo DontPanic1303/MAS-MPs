@@ -35,7 +35,6 @@ const Tutors = () => {
 
     const getDay = () => {
         const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + 1);
         return currentDate.toISOString().split('T')[0];
     }
 

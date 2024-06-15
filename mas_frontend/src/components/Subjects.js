@@ -12,7 +12,7 @@ const Subjects = () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const subjectsData = await response.json();
-            if (subjectsData.length === 0)
+            if (subjectsData.length < 1)
                 navigate('/singUp/noSubject');
             return subjectsData;
         } catch (error) {

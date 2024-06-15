@@ -52,8 +52,9 @@ public class Tutor extends Person {
 
     @OneToMany(mappedBy = "tutor", cascade = {CascadeType.REMOVE})
     @ToString.Exclude
+    @Builder.Default
     @EqualsAndHashCode.Exclude
-    private Set<Lesson> lessons;
+    private Set<Lesson> lessons = new HashSet<>();
 
     @Getter
     private static Double minimal_hourly_salary = 20.0;

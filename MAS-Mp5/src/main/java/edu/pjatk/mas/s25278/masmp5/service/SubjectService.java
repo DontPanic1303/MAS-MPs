@@ -24,4 +24,16 @@ public class SubjectService {
                 .collect(Collectors.toList());
     }
 
+    public List<Subject> getAllSubject() {
+
+        return subjectRepository.findAll();
+
+    }
+
+    public void addNewSubject(Subject subject) {
+
+        subjectRepository.save(subject);
+
+    }
+
 }

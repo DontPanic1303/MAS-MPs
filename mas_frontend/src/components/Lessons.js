@@ -90,7 +90,7 @@ const Lessons = () => {
         <div className="lesson-selection">
             <button className="back-button" onClick={goBack}>Powrót</button>
             <h1>Wybierz termin</h1>
-            {startDay > getNextDayISO(new Date()) ? (
+            {startDay >= getNextDayISO(new Date()) ? (
                 <div className="date-navigation">
                     <button onClick={goToDayBefore}>{getBeforeDayISO(startDay)}</button>
                     <h3>{startDay}</h3>
@@ -98,6 +98,7 @@ const Lessons = () => {
                 </div>
             ) : (
                 <div className="date-navigation">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <h3>{startDay}</h3>
                     <button onClick={goToDayNext}>{getNextDayISO(startDay)}</button>
                 </div>

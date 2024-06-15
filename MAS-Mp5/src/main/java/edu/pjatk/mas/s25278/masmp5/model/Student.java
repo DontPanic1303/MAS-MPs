@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,8 +24,9 @@ public class Student extends Person{
 
     @OneToMany(mappedBy = "student", cascade = {CascadeType.REMOVE})
     @ToString.Exclude
+    @Builder.Default
     @EqualsAndHashCode.Exclude
-    private Set<Lesson> lessons;
+    private Set<Lesson> lessons = new HashSet<>();
 
 
 

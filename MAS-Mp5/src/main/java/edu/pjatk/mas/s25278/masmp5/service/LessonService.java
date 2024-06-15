@@ -5,19 +5,14 @@ import edu.pjatk.mas.s25278.masmp5.DTO.LessonDTO;
 import edu.pjatk.mas.s25278.masmp5.enums.DayOfTheWeek;
 import edu.pjatk.mas.s25278.masmp5.enums.LessonStatus;
 import edu.pjatk.mas.s25278.masmp5.enums.PaymentStatus;
-import edu.pjatk.mas.s25278.masmp5.model.Lesson;
-import edu.pjatk.mas.s25278.masmp5.model.Payment;
-import edu.pjatk.mas.s25278.masmp5.model.Student;
-import edu.pjatk.mas.s25278.masmp5.model.Tutor;
-import edu.pjatk.mas.s25278.masmp5.repository.LessonRepository;
-import edu.pjatk.mas.s25278.masmp5.repository.PaymentRepository;
-import edu.pjatk.mas.s25278.masmp5.repository.StudentRepository;
-import edu.pjatk.mas.s25278.masmp5.repository.TutorRepository;
+import edu.pjatk.mas.s25278.masmp5.model.*;
+import edu.pjatk.mas.s25278.masmp5.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +27,7 @@ public class LessonService {
     private final TutorRepository tutorRepository;
     private final StudentRepository studentRepository;
     private final PaymentRepository paymentRepository;
+    private final BanRepository banRepository;
 
     public List<LessonDTO> getAllTutorLessonFromDay(Long id, LocalDate startDate) {
         List<Lesson> lessons = lessonRepository.findAllByTutorIdAndStartDate(id,startDate);
@@ -75,6 +71,21 @@ public class LessonService {
             return lessonsToReturn;
         }
 
+        if (startDate.isBefore(LocalDate.now())){
+            return lessonsToReturn;
+        }
+
+        List<Ban> bans = banRepository.findAllByImposedOnId(id);
+
+        for (Ban ban : bans) {
+            LocalDate banStartTime = ban.getStartTime();
+            LocalDate banEndTime = banStartTime.plusDays(ban.getDays());
+            if ((startDate.isEqual(banStartTime) || startDate.isAfter(banStartTime)) &&
+                    (startDate.isEqual(banEndTime) || startDate.isBefore(banEndTime))) {
+                return lessonsToReturn;
+            }
+        }
+
         String[] hours = tutor.get().getWork_hours().split("-");
         int startHour = Integer.parseInt(hours[0]);
         int endHour = Integer.parseInt(hours[1]);
@@ -83,9 +94,21 @@ public class LessonService {
                 .map(Lesson::getStartTime)
                 .collect(Collectors.toSet());
 
-        for (int i = startHour; i < endHour; i++) {
-            boolean isReserved = lessonStartTimes.contains(i);
-            lessonsToReturn.add(new LessonDTO(i, !isReserved));
+        if (startDate.isEqual(LocalDate.now())){
+            for (int i = startHour; i < endHour; i++) {
+
+                if (i <= LocalDateTime.now().getHour())
+                    lessonsToReturn.add(new LessonDTO(i, false));
+                else {
+                    boolean isReserved = lessonStartTimes.contains(i);
+                    lessonsToReturn.add(new LessonDTO(i, !isReserved));
+                }
+            }
+        } else {
+            for (int i = startHour; i < endHour; i++) {
+                boolean isReserved = lessonStartTimes.contains(i);
+                lessonsToReturn.add(new LessonDTO(i, !isReserved));
+            }
         }
 
         int to4 = lessonsToReturn.size()%4;
@@ -128,6 +151,37 @@ public class LessonService {
             lessonRepository.save(newLesson);
             return new LessonDTO(Math.toIntExact(newLesson.getId()),true);
         }
+    }
+
+    public void cancelLesson(Lesson lesson) {
+
+        lesson.setLessonStatus(LessonStatus.CANCELED);
+        lessonRepository.save(lesson);
+
+    }
+
+    public void acceptLesson(Lesson lesson) {
+
+        lesson.setLessonStatus(LessonStatus.PLANED);
+        lessonRepository.save(lesson);
+
+    }
+
+    public List<Lesson> getAllLesson(Long personId) {
+
+        return lessonRepository.findAllByPersonId(personId);
+
+    }
+
+    public Lesson getLessonById(Long lessonId) {
+
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId);
+
+        if (lesson.isEmpty())
+            throw new IllegalArgumentException("Wrong lesson id");
+
+        return lesson.get();
+
     }
 
 }

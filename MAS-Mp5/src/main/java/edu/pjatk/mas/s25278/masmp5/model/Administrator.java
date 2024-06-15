@@ -25,6 +25,6 @@ public class Administrator extends Person{
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Ban> bans = new HashSet<>();
+    private Set<Ban> givenBans = new HashSet<>();
 
 }
